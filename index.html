@@ -1,0 +1,2182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐕 Baggy - Notre Futur Staffie | Paris 2ème</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #F2C8DD;
+            --surface: #A5DBF8;
+            --primary: #FFD757;
+            --secondary: #BFC6F1;
+            --accent: #FF9DA7;
+            --dog-highlight: #C4547D;
+            --pattern-1: #FEBBFF;
+            --pattern-2: #FDC4CD;
+            --pattern-3: #9DF0B3;
+            --pattern-4: #FD2CA0;
+            --paws: #9DF0B3;
+            --bone: #F6B740;
+        }
+
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--surface) 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Memphis Patterns Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, var(--pattern-4) 10px, var(--pattern-4) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, var(--pattern-3) 10px, var(--pattern-3) 20px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 30px;
+            border-radius: 32px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '🦴';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: -20px;
+            right: 50px;
+            transform: rotate(-15deg);
+        }
+
+        header::after {
+            content: '🐾';
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.1;
+            bottom: -10px;
+            left: 30px;
+            transform: rotate(25deg);
+        }
+
+        h1 {
+            font-family: 'Baloo 2', 'Comic Sans MS', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dog-highlight);
+            text-align: center;
+            text-shadow: 3px 3px 0 rgba(255,255,255,0.5);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.3);
+            padding: 20px;
+            border-radius: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn {
+            background: var(--secondary);
+            color: var(--dog-highlight);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 28px;
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: 700;
+        }
+
+        .tab-btn:hover {
+            background: var(--primary);
+            color: var(--accent);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn.active {
+            background: var(--dog-highlight);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+            background: rgba(255,255,255,0.7);
+            padding: 40px;
+            border-radius: 32px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 2rem;
+            color: var(--dog-highlight);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Interactive Dog */
+        .interactive-dog-container {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .interactive-dog {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: all 0.3s ease;
+            width: 200px;
+            height: 200px;
+            user-select: none;
+        }
+
+        .interactive-dog img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 20px rgba(196, 84, 125, 0.3));
+        }
+
+        .interactive-dog:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .interactive-dog:active {
+            transform: scale(0.95) rotate(-5deg);
+        }
+
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            animation: sparkleFloat 2s ease-out forwards;
+            font-size: 2rem;
+            z-index: 100;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50px) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
+        .affection-message {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: var(--dog-highlight);
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .affection-message.show {
+            opacity: 1;
+        }
+
+        /* Spotify Player */
+        .spotify-player {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .spotify-player iframe {
+            border-radius: 32px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--surface), var(--secondary));
+            padding: 25px;
+            border-radius: 32px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px) rotate(2deg);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-weight: 700;
+            color: var(--dog-highlight);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .comparison-column {
+            background: rgba(255,255,255,0.8);
+            padding: 25px;
+            border-radius: 32px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .comparison-column h3 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .positive h3 {
+            color: var(--paws);
+        }
+
+        .attention h3 {
+            color: var(--accent);
+        }
+
+        .comparison-item {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .positive .comparison-item {
+            background: rgba(157, 240, 179, 0.3);
+        }
+
+        .attention .comparison-item {
+            background: rgba(255, 157, 167, 0.3);
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .gallery-item {
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+        }
+
+        /* Videos */
+        .video-container {
+            margin: 20px 0;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .video-container video,
+        .video-container iframe {
+            width: 100%;
+            border-radius: 32px;
+            display: block;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        /* Ratings */
+        .ratings-container {
+            margin: 30px 0;
+        }
+
+        .rating-item {
+            background: linear-gradient(135deg, var(--primary), var(--surface));
+            padding: 20px;
+            border-radius: 25px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .rating-label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dog-highlight);
+        }
+
+        .rating-bar {
+            flex: 1;
+            margin: 0 20px;
+            height: 30px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .rating-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--paws), var(--primary));
+            border-radius: 15px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .compatibility-score {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(var(--paws) 0% 80%, rgba(255,255,255,0.3) 80% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .score-inner {
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--dog-highlight);
+            font-family: 'Baloo 2', sans-serif;
+        }
+
+        /* Planning */
+        .planning-timeline {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 32px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: linear-gradient(90deg, var(--surface), var(--secondary));
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .timeline-time {
+            font-weight: 800;
+            color: var(--dog-highlight);
+            min-width: 80px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-activity {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .parks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .park-card {
+            background: linear-gradient(135deg, var(--paws), var(--surface));
+            padding: 25px;
+            border-radius: 32px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .park-card:hover {
+            transform: translateY(-8px) rotate(1deg);
+        }
+
+        .park-name {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--dog-highlight);
+            margin-bottom: 10px;
+        }
+
+        .park-distance {
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .park-link {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--dog-highlight);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .park-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Budget */
+        .budget-section {
+            margin: 30px 0;
+        }
+
+        .budget-card {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 30px;
+            border-radius: 32px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .budget-card h3 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .budget-items {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 25px;
+        }
+
+        .budget-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            margin: 8px 0;
+            border-bottom: 2px dashed var(--surface);
+        }
+
+        .budget-item:last-child {
+            border-bottom: none;
+        }
+
+        .budget-label {
+            font-weight: 600;
+        }
+
+        .budget-value {
+            font-weight: 800;
+            color: var(--dog-highlight);
+        }
+
+        .budget-total {
+            margin-top: 15px;
+            padding: 20px;
+            background: var(--dog-highlight);
+            color: white;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        /* Games Gallery */
+        .games-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, var(--surface), var(--secondary));
+            padding: 30px;
+            border-radius: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .game-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .game-title {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.5rem;
+            color: var(--dog-highlight);
+            margin-bottom: 10px;
+        }
+
+        .game-description {
+            color: #555;
+            font-weight: 500;
+        }
+
+        .game-container {
+            display: none;
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 32px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .game-container.active {
+            display: block;
+        }
+
+        .back-to-games {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-games:hover {
+            background: var(--dog-highlight);
+            transform: scale(1.05);
+        }
+
+        /* Quiz */
+        .quiz-question {
+            background: var(--surface);
+            padding: 25px;
+            border-radius: 25px;
+            margin: 20px 0;
+        }
+
+        .quiz-question h4 {
+            font-family: 'Baloo 2', sans-serif;
+            color: var(--dog-highlight);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .quiz-option:hover {
+            background: var(--primary);
+            transform: translateX(10px);
+        }
+
+        .quiz-option.correct {
+            background: var(--paws);
+            border-color: green;
+            color: white;
+            font-weight: 700;
+        }
+
+        .quiz-option.incorrect {
+            background: var(--accent);
+            border-color: red;
+            color: white;
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 32px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Memory Game */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--secondary), var(--surface));
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            background: var(--primary);
+            transform: rotateY(180deg);
+        }
+
+        .memory-card.matched {
+            background: var(--paws);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Catch Ball Game */
+        .catch-game-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(to bottom, var(--surface), var(--paws));
+            border-radius: 32px;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .dog-catcher {
+            position: absolute;
+            bottom: 10px;
+            font-size: 3rem;
+            transition: left 0.1s ease;
+        }
+
+        .ball {
+            position: absolute;
+            font-size: 2rem;
+            animation: fall 3s linear;
+        }
+
+        @keyframes fall {
+            from { top: -50px; }
+            to { top: 100%; }
+        }
+
+        .game-score {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dog-highlight);
+            margin: 20px 0;
+            font-family: 'Baloo 2', sans-serif;
+        }
+
+        /* Checklist */
+        .checklist {
+            margin: 30px 0;
+        }
+
+        .checklist-item {
+            background: white;
+            padding: 20px;
+            border-radius: 25px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .checklist-item:hover {
+            background: var(--primary);
+            transform: translateX(10px);
+        }
+
+        .checklist-item.checked {
+            background: var(--paws);
+            color: white;
+        }
+
+        .checklist-checkbox {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--dog-highlight);
+            border-radius: 10px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .checklist-item.checked .checklist-checkbox {
+            background: white;
+            color: var(--paws);
+        }
+
+        .checklist-score-container {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--dog-highlight), var(--accent));
+            border-radius: 32px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .checklist-score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: 'Baloo 2', sans-serif;
+            margin: 20px 0;
+        }
+
+        .readiness-message {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: linear-gradient(135deg, var(--accent), var(--pattern-4));
+            padding: 25px;
+            border-radius: 32px;
+            margin: 30px 0;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .alert-box h3 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.5rem; }
+            .tabs-nav { gap: 5px; }
+            .tab-btn { padding: 10px 15px; font-size: 0.9rem; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .memory-grid { grid-template-columns: repeat(3, 1fr); }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .bounce {
+            animation: bounce 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐕 Baggy - Notre Futur Staffie</h1>
+            <p class="subtitle">Paris 2ème • Thibaut & Lucile</p>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <nav class="tabs-nav">
+            <button class="tab-btn active" data-tab="apercu">📊 Aperçu</button>
+            <button class="tab-btn" data-tab="galerie">📸 Galerie</button>
+            <button class="tab-btn" data-tab="videos">🎥 Vidéos</button>
+            <button class="tab-btn" data-tab="evaluation">⭐ Évaluation</button>
+            <button class="tab-btn" data-tab="planning">📅 Planning</button>
+            <button class="tab-btn" data-tab="budget">💰 Budget</button>
+            <button class="tab-btn" data-tab="jeux">🎮 Jeux</button>
+            <button class="tab-btn" data-tab="checklist">✅ Checklist</button>
+        </nav>
+
+        <!-- TAB 1: APERÇU -->
+        <div id="apercu" class="tab-content active">
+            <h2>🐕 Rencontrez Baggy !</h2>
+            
+            <!-- Interactive Dog -->
+            <div class="interactive-dog-container">
+                <div class="interactive-dog" id="interactiveDog">
+                    <img src="https://raw.githubusercontent.com/ThibautMelen/baggy-staffie-guide/main/assets/baggy-emoji.webp" alt="Baggy le Staffie" />
+                </div>
+                <p style="margin-top: 15px; font-weight: 600; color: var(--dog-highlight);">👆 Caresse-moi pendant 2 secondes ! 🐾</p>
+                <div class="affection-message" id="affectionMessage">🐕 Baggy : Wouaf ! J'adore les câlins ! 💕</div>
+            </div>
+
+            <!-- Spotify Player -->
+            <div class="spotify-player">
+                <iframe id="spotifyPlayer" style="border-radius:12px; display:none;" src="https://open.spotify.com/embed/track/1H5tvpoApNDxvxDexoaAUo?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📏</div>
+                    <div class="stat-label">Taille</div>
+                    <div class="stat-value">35-40 cm</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚖️</div>
+                    <div class="stat-label">Poids</div>
+                    <div class="stat-value">11-17 kg</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎂</div>
+                    <div class="stat-label">Espérance de vie</div>
+                    <div class="stat-value">12-14 ans</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🇬🇧</div>
+                    <div class="stat-label">Origine</div>
+                    <div class="stat-value">Angleterre</div>
+                </div>
+            </div>
+
+            <!-- Comparison -->
+            <div class="comparison-grid">
+                <div class="comparison-column positive">
+                    <h3>✅ Points Positifs</h3>
+                    <div class="comparison-item">💕 Extrêmement affectueux et loyal</div>
+                    <div class="comparison-item">👶 Excellent avec les enfants (Nanny Dog)</div>
+                    <div class="comparison-item">🏠 S'adapte bien à la vie en appartement</div>
+                    <div class="comparison-item">💪 Robuste et peu de problèmes de santé</div>
+                    <div class="comparison-item">🎓 Intelligent et facile à éduquer</div>
+                    <div class="comparison-item">🧹 Entretien minimal (poil court)</div>
+                </div>
+                <div class="comparison-column attention">
+                    <h3>⚠️ Points d'Attention</h3>
+                    <div class="comparison-item">🏃 Besoin d'exercice quotidien (2h30 min)</div>
+                    <div class="comparison-item">👥 Ne supporte pas la solitude prolongée</div>
+                    <div class="comparison-item">🎓 Éducation ferme et cohérente nécessaire</div>
+                    <div class="comparison-item">⚡ Très énergique, surtout jeune</div>
+                    <div class="comparison-item">🌳 Paris 2ème = peu d'espaces verts</div>
+                    <div class="comparison-item">📋 Peut être soumis à réglementation</div>
+                </div>
+            </div>
+
+            <!-- Fun Fact -->
+            <div class="alert-box">
+                <h3>💡 Le Saviez-Vous ?</h3>
+                <p>Le Staffordshire Bull Terrier était historiquement surnommé le <strong>"Nanny Dog"</strong> (chien nounou) au Royaume-Uni pour sa douceur légendaire avec les enfants. C'est un compagnon familial parfait qui protège naturellement les plus jeunes !</p>
+            </div>
+
+            <!-- Paris 2ème Alert -->
+            <div class="alert-box" style="background: linear-gradient(135deg, var(--pattern-4), var(--dog-highlight));">
+                <h3>🗼 Vivre à Paris 2ème avec Baggy</h3>
+                <p><strong>Attention :</strong> Le 2ème arrondissement a peu d'espaces verts. Il faudra prévoir des sorties régulières vers les grands parcs (Tuileries, Palais Royal, Parc Monceau). Avec votre télétravail flexible et la possibilité d'amener Baggy au bureau, c'est tout à fait gérable ! 🚶‍♂️🐕</p>
+            </div>
+        </div>
+
+        <!-- TAB 2: GALERIE -->
+        <div id="galerie" class="tab-content">
+            <h2>📸 Galerie Photos de Baggy</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="./assets/images/staffie-adulte.jpg" alt="Staffie Adulte" loading="lazy">
+                    <div class="gallery-caption">🐕 Staffie Adulte Majestueux</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./assets/images/staffie-chiot.jpg" alt="Chiot Staffie" loading="lazy">
+                    <div class="gallery-caption">🐶 Adorable Chiot Staffie</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./assets/images/lucile-baggy.png" alt="Lucile avec Baggy" loading="lazy">
+                    <div class="gallery-caption">💕 Lucile & Baggy</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./assets/images/photo-baggy.jpg" alt="Photo de Baggy" loading="lazy">
+                    <div class="gallery-caption">📷 Notre Futur Baggy</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="./assets/images/illustration-staffie.png" alt="Illustration Staffie" loading="lazy">
+                    <div class="gallery-caption">🎨 Illustration Artistique</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: VIDÉOS -->
+        <div id="videos" class="tab-content">
+            <h2>🎥 Vidéos Éducatives</h2>
+            
+            <h3 style="margin-top: 30px; color: var(--dog-highlight); font-family: 'Baloo 2', sans-serif;">🐕 Vidéo de Baggy</h3>
+            <div class="video-container">
+                <video controls loop autoplay muted playsinline>
+                    <source src="./assets/videos/baggy-video.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la vidéo.
+                </video>
+            </div>
+
+            <h3 style="margin-top: 40px; color: var(--dog-highlight); font-family: 'Baloo 2', sans-serif;">📺 Guides YouTube</h3>
+            <div class="video-grid">
+                <div class="video-container">
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/qGW3gN_zF8E" title="Tout savoir sur le Staffie" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p style="text-align: center; margin-top: 10px; font-weight: 600;">Tout savoir sur le Staffie</p>
+                </div>
+                <div class="video-container">
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/3dMKR5i9bbM" title="Éducation de base" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p style="text-align: center; margin-top: 10px; font-weight: 600;">Éducation de Base</p>
+                </div>
+                <div class="video-container">
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/k0eeJct78Ys" title="Vie en appartement" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p style="text-align: center; margin-top: 10px; font-weight: 600;">Vivre en Appartement</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: ÉVALUATION -->
+        <div id="evaluation" class="tab-content">
+            <h2>⭐ Évaluation & Compatibilité</h2>
+            
+            <div class="compatibility-score">
+                <h3 style="font-family: 'Baloo 2', sans-serif; color: var(--dog-highlight); margin-bottom: 20px;">Score de Compatibilité</h3>
+                <div class="score-circle">
+                    <div class="score-inner">
+                        <div class="score-value">80%</div>
+                        <div style="color: #666;">Compatible</div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-weight: 600; color: #555;">Vous êtes très compatibles avec Baggy ! 🎉</p>
+            </div>
+
+            <h3 style="margin-top: 40px; text-align: center; font-family: 'Baloo 2', sans-serif; color: var(--dog-highlight);">Notes Détaillées</h3>
+            <div class="ratings-container">
+                <div class="rating-item">
+                    <span class="rating-label">💕 Affection</span>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 100%;">10/10</div>
+                    </div>
+                </div>
+                <div class="rating-item">
+                    <span class="rating-label">🏅 Loyauté</span>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 100%;">10/10</div>
+                    </div>
+                </div>
+                <div class="rating-item">
+                    <span class="rating-label">🔇 Silence</span>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 80%;">8/10</div>
+                    </div>
+                </div>
+                <div class="rating-item">
+                    <span class="rating-label">🧹 Propreté</span>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 70%;">7/10</div>
+                    </div>
+                </div>
+                <div class="rating-item">
+                    <span class="rating-label">🎓 Éducation</span>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 70%;">7/10</div>
+                    </div>
+                </div>
+                <div class="rating-item">
+                    <span class="rating-label">🏃 Énergie ⚠️</span>
+                    <div class="rating-bar">
+                        <div class="rating-fill" style="width: 90%;">9/10</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <div class="budget-total" style="max-width: 400px; margin: 0 auto;">
+                    <div style="font-size: 1.2rem; margin-bottom: 10px;">Score Global</div>
+                    <div style="font-size: 2.5rem;">8.5/10</div>
+                    <div style="font-size: 1rem; margin-top: 10px;">Excellent Compagnon ! 🌟</div>
+                </div>
+            </div>
+
+            <div class="alert-box" style="background: linear-gradient(135deg, var(--paws), var(--surface));">
+                <h3>💑 Compatibilité Thibaut & Lucile</h3>
+                <p>✅ <strong>Télétravail flexible</strong> : Parfait pour les sorties régulières<br>
+                ✅ <strong>Possibilité bureau</strong> : Baggy peut vous accompagner<br>
+                ✅ <strong>Couple actif</strong> : Idéal pour un Staffie énergique<br>
+                ✅ <strong>Amis support</strong> : Garde ponctuelle possible<br>
+                ✅ <strong>Solution vacances</strong> : Ami avec mini-ferme à Mâcon<br>
+                ⚠️ <strong>Paris 2ème</strong> : Attention aux espaces verts limités</p>
+            </div>
+        </div>
+
+        <!-- TAB 5: PLANNING -->
+        <div id="planning" class="tab-content">
+            <h2>📅 Planning Quotidien avec Baggy</h2>
+            
+            <h3 style="text-align: center; font-family: 'Baloo 2', sans-serif; color: var(--dog-highlight); margin-bottom: 20px;">🕐 Journée Type</h3>
+            <div class="planning-timeline">
+                <div class="timeline-item">
+                    <span class="timeline-time">07h00</span>
+                    <span class="timeline-activity">🌅 Réveil + Sortie pipi rapide (10 min)</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">08h00</span>
+                    <span class="timeline-activity">🍖 Petit déjeuner de Baggy</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">08h30</span>
+                    <span class="timeline-activity">🏃 Grande sortie matinale (45 min)</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">09h-12h</span>
+                    <span class="timeline-activity">💤 Temps calme / Sieste / Télétravail</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">12h30</span>
+                    <span class="timeline-activity">🌞 Sortie midi (30 min)</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">13h-17h</span>
+                    <span class="timeline-activity">💤 Temps calme / Sieste / Télétravail</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">17h30</span>
+                    <span class="timeline-activity">🏃 Grande sortie du soir (1h)</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">19h00</span>
+                    <span class="timeline-activity">🍖 Dîner de Baggy</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">20h-22h</span>
+                    <span class="timeline-activity">🎾 Jeux / Câlins / Éducation</span>
+                </div>
+                <div class="timeline-item">
+                    <span class="timeline-time">22h30</span>
+                    <span class="timeline-activity">🌙 Dernière sortie pipi (15 min)</span>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; font-family: 'Baloo 2', sans-serif; color: var(--dog-highlight); margin: 40px 0 20px 0;">🌳 Parcs à Proximité</h3>
+            <div class="parks-grid">
+                <div class="park-card">
+                    <div class="park-name">🌸 Jardin du Palais Royal</div>
+                    <div class="park-distance">📍 5 minutes à pied</div>
+                    <p style="margin-bottom: 15px; font-size: 0.9rem;">Jardin calme et élégant, parfait pour les promenades courtes.</p>
+                    <a href="https://www.google.com/maps/dir//Jardin+du+Palais+Royal,+Paris+2ème" target="_blank" class="park-link">🗺️ Voir sur Maps</a>
+                </div>
+                <div class="park-card">
+                    <div class="park-name">🌺 Jardin des Tuileries</div>
+                    <div class="park-distance">📍 15 minutes à pied</div>
+                    <p style="margin-bottom: 15px; font-size: 0.9rem;">Grand jardin historique, idéal pour les longues promenades.</p>
+                    <a href="https://www.google.com/maps/dir//Jardin+des+Tuileries,+Paris" target="_blank" class="park-link">🗺️ Voir sur Maps</a>
+                </div>
+                <div class="park-card">
+                    <div class="park-name">🏞️ Parc Monceau</div>
+                    <div class="park-distance">📍 20 minutes en métro</div>
+                    <p style="margin-bottom: 15px; font-size: 0.9rem;">Parc magnifique avec pelouses et statues, excellent pour socialisation.</p>
+                    <a href="https://www.google.com/maps/dir//Parc+Monceau,+Paris" target="_blank" class="park-link">🗺️ Voir sur Maps</a>
+                </div>
+                <div class="park-card">
+                    <div class="park-name">🌲 Bois de Vincennes</div>
+                    <div class="park-distance">📍 25 minutes en métro</div>
+                    <p style="margin-bottom: 15px; font-size: 0.9rem;">Immense espace naturel, parfait pour les week-ends et grands défoulements.</p>
+                    <a href="https://www.google.com/maps/dir//Bois+de+Vincennes,+Paris" target="_blank" class="park-link">🗺️ Voir sur Maps</a>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <h3>💼 Organisation Télétravail</h3>
+                <p>• <strong>Pauses régulières</strong> : Profitez de vos pauses pour sortir Baggy<br>
+                • <strong>Amener au bureau</strong> : Quand possible, Baggy peut vous accompagner<br>
+                • <strong>Amis à proximité</strong> : En cas de journée intense, possibilité de garde<br>
+                • <strong>Horaires flexibles</strong> : Adaptez vos horaires aux besoins de Baggy</p>
+            </div>
+        </div>
+
+        <!-- TAB 6: BUDGET -->
+        <div id="budget" class="tab-content">
+            <h2>💰 Budget Détaillé</h2>
+            
+            <div class="budget-section">
+                <div class="budget-card">
+                    <h3>💶 Coûts Mensuels Récurrents</h3>
+                    <div class="budget-items">
+                        <div class="budget-item">
+                            <span class="budget-label">🍖 Alimentation (croquettes premium)</span>
+                            <span class="budget-value">60-80€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🏥 Santé / Mutuelle</span>
+                            <span class="budget-value">40-60€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🎾 Accessoires / Jouets</span>
+                            <span class="budget-value">15-25€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🎓 Éducation / Activités</span>
+                            <span class="budget-value">30-50€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🧼 Hygiène / Toilettage</span>
+                            <span class="budget-value">10-15€</span>
+                        </div>
+                        <div class="budget-total">
+                            Total Mensuel : 155-230€/mois
+                        </div>
+                    </div>
+                </div>
+
+                <div class="budget-card" style="background: linear-gradient(135deg, var(--accent), var(--pattern-4));">
+                    <h3>💰 Coûts Première Année</h3>
+                    <div class="budget-items">
+                        <div class="budget-item">
+                            <span class="budget-label">🐕 Achat chiot LOF</span>
+                            <span class="budget-value">800-1500€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">💉 Vaccins + Identification (puce)</span>
+                            <span class="budget-value">200-300€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">✂️ Stérilisation</span>
+                            <span class="budget-value">200-400€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🎒 Équipement initial (panier, laisse, gamelles...)</span>
+                            <span class="budget-value">200-400€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🎓 École du chiot (10 séances)</span>
+                            <span class="budget-value">300-600€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🛡️ Assurance Responsabilité Civile</span>
+                            <span class="budget-value">300-500€</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">💶 Frais mensuels x12</span>
+                            <span class="budget-value">1860-2760€</span>
+                        </div>
+                        <div class="budget-total">
+                            Total 1ère Année : 3860-6460€
+                        </div>
+                    </div>
+                </div>
+
+                <div class="budget-card" style="background: linear-gradient(135deg, var(--paws), var(--surface));">
+                    <h3>🏨 Budget Dog-Sitter (si besoin)</h3>
+                    <div class="budget-items">
+                        <div class="budget-item">
+                            <span class="budget-label">🏃 Visite midi (promenade)</span>
+                            <span class="budget-value">15-25€/visite</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🏠 Garde à la journée</span>
+                            <span class="budget-value">30-50€/jour</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">🌙 Garde jour + nuit</span>
+                            <span class="budget-value">50-80€/jour</span>
+                        </div>
+                        <div class="budget-item">
+                            <span class="budget-label">✈️ Pension vacances</span>
+                            <span class="budget-value">20-40€/jour</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <h3>💡 Astuce Budget</h3>
+                <p>🎉 <strong>Bonne nouvelle !</strong> Vous avez un ami avec une mini-ferme vers Mâcon qui peut garder Baggy pendant vos longues vacances ! Cela représente une économie significative (500-1000€ par an) et Baggy pourra profiter de la compagnie d'autres chiens. 🐕🐕🐕</p>
+            </div>
+        </div>
+
+        <!-- TAB 7: JEUX -->
+        <div id="jeux" class="tab-content">
+            <div id="gamesGallery">
+                <h2>🎮 Mini-Jeux & Quiz Staffie</h2>
+                <p style="text-align: center; margin-bottom: 30px; font-size: 1.1rem; color: var(--dog-highlight); font-weight: 600;">Testez vos connaissances et amusez-vous avec Baggy ! 🐕</p>
+                
+                <div class="games-gallery">
+                    <div class="game-card" onclick="showGame('quiz')">
+                        <div class="game-icon">🧠</div>
+                        <div class="game-title">Quiz Connaissances</div>
+                        <div class="game-description">Testez vos connaissances sur les Staffies !</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="showGame('memory')">
+                        <div class="game-icon">🃏</div>
+                        <div class="game-title">Memory Game</div>
+                        <div class="game-description">Retrouvez les paires de Staffies !</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="showGame('simulator')">
+                        <div class="game-icon">📅</div>
+                        <div class="game-title">Simulateur de Journée</div>
+                        <div class="game-description">Organisez une journée parfaite avec Baggy</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="showGame('needs')">
+                        <div class="game-icon">🎯</div>
+                        <div class="game-title">Besoins du Staffie</div>
+                        <div class="game-description">Identifiez les besoins essentiels</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="showGame('catch')">
+                        <div class="game-icon">🎾</div>
+                        <div class="game-title">Catch the Ball</div>
+                        <div class="game-description">Attrapez les balles avec Baggy !</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="showGame('personality')">
+                        <div class="game-icon">📊</div>
+                        <div class="game-title">Quel Propriétaire ?</div>
+                        <div class="game-description">Découvrez votre profil de propriétaire</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="showGame('walker')">
+                        <div class="game-icon">🚶</div>
+                        <div class="game-title">Calculateur Promenade</div>
+                        <div class="game-description">Planifiez les sorties idéales</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUIZ GAME -->
+            <div id="quizGame" class="game-container">
+                <button class="back-to-games" onclick="backToGallery()">← Retour aux jeux</button>
+                <h2>🧠 Quiz Connaissances Staffie</h2>
+                
+                <div class="quiz-question">
+                    <h4>Question 1 : Combien de temps minimum faut-il sortir un Staffie par jour ?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">30 minutes</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">1 heure</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">2h30 minimum</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">4 heures</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2 : Quel est le surnom historique du Staffie ?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">Guard Dog</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">Nanny Dog</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">Fighter Dog</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">Royal Dog</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3 : Combien de temps max un Staffie peut-il rester seul ?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">8-9h</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">4-5h max</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">2h max</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">Jamais seul</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4 : Quelle est la particularité du Staffie avec les enfants ?</h4>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">Dangereux</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">Indifférent</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">Excellent et protecteur</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">Peureux</div>
+                    </div>
+                </div>
+
+                <div class="quiz-result" id="quizResult">
+                    <h3 id="quizResultText"></h3>
+                    <p id="quizResultDesc"></p>
+                </div>
+            </div>
+
+            <!-- MEMORY GAME -->
+            <div id="memoryGame" class="game-container">
+                <button class="back-to-games" onclick="backToGallery()">← Retour aux jeux</button>
+                <h2>🃏 Memory Game Staffie</h2>
+                <div class="game-score">Score : <span id="memoryScore">0</span> coups</div>
+                <div class="memory-grid" id="memoryGrid"></div>
+            </div>
+
+            <!-- CATCH BALL GAME -->
+            <div id="catchGame" class="game-container">
+                <button class="back-to-games" onclick="backToGallery()">← Retour aux jeux</button>
+                <h2>🎾 Catch the Ball</h2>
+                <div class="game-score">Balles attrapées : <span id="catchScore">0</span></div>
+                <div class="catch-game-container" id="catchContainer">
+                    <div class="dog-catcher" id="dogCatcher">🐕</div>
+                </div>
+                <p style="text-align: center; margin-top: 15px; font-weight: 600;">Déplacez votre souris pour attraper les balles ! 🎯</p>
+            </div>
+
+            <!-- SIMULATOR GAME -->
+            <div id="simulatorGame" class="game-container">
+                <button class="back-to-games" onclick="backToGallery()">← Retour aux jeux</button>
+                <h2>📅 Simulateur de Journée</h2>
+                <p style="text-align: center; margin-bottom: 20px; color: var(--dog-highlight); font-weight: 600;">Glissez les activités pour créer une journée parfaite ! 🐕</p>
+                <div id="simulatorContent">
+                    <div style="background: rgba(255,255,255,0.8); padding: 30px; border-radius: 25px; text-align: center;">
+                        <p style="font-size: 1.5rem; margin-bottom: 20px;">🏗️ En construction...</p>
+                        <p>Cette fonctionnalité interactive arrive bientôt ! En attendant, consultez l'onglet "Planning" pour voir une journée type avec Baggy. 🐾</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEEDS GAME -->
+            <div id="needsGame" class="game-container">
+                <button class="back-to-games" onclick="backToGallery()">← Retour aux jeux</button>
+                <h2>🎯 Besoins du Staffie</h2>
+                <p style="text-align: center; margin-bottom: 20px; color: var(--dog-highlight); font-weight: 600;">Cliquez sur les besoins essentiels d'un Staffie ! 🐕</p>
+                <div class="stats-grid">
+                    <div class="stat-card" onclick="selectNeed(this, true)" style="cursor: pointer;">
+                        <div class="stat-icon">🏃</div>
+                        <div class="stat-label">Exercice Quotidien</div>
+                    </div>
+                    <div class="stat-card" onclick="selectNeed(this, true)" style="cursor: pointer;">
+                        <div class="stat-icon">💕</div>
+                        <div class="stat-label">Affection</div>
+                    </div>
+                    <div class="stat-card" onclick="selectNeed(this, false)" style="cursor: pointer;">
+                        <div class="stat-icon">🏠</div>
+                        <div class="stat-label">Grande Maison</div>
+                    </div>
+                    <div class="stat-card" onclick="selectNeed(this, true)" style="cursor: pointer;">
+                        <div class="stat-icon">🍖</div>
+                        <div class="stat-label">Alimentation Qualité</div>
+                    </div>
+                    <div class="stat-card" onclick="selectNeed(this, true)" style="cursor: pointer;">
+                        <div class="stat-icon">🎓</div>
+                        <div class="stat-label">Éducation</div>
+                    </div>
+                    <div class="stat-card" onclick="selectNeed(this, false)" style="cursor: pointer;">
+                        <div class="stat-icon">🌊</div>
+                        <div class="stat-label">Piscine</div>
+                    </div>
+                    <div class="stat-card" onclick="selectNeed(this, true)" style="cursor: pointer;">
+                        <div class="stat-icon">🏥</div>
+                        <div class="stat-label">Soins Vétérinaires</div>
+                    </div>
+                    <div class="stat-card" onclick="selectNeed(this, false)" style="cursor: pointer;">
+                        <div class="stat-icon">🏔️</div>
+                        <div class="stat-label">Randonnées Montagne</div>
+                    </div>
+                </div>
+                <div class="quiz-result" id="needsResult">
+                    <h3 id="needsResultText"></h3>
+                </div>
+            </div>
+
+            <!-- PERSONALITY QUIZ -->
+            <div id="personalityGame" class="game-container">
+                <button class="back-to-games" onclick="backToGallery()">← Retour aux jeux</button>
+                <h2>📊 Quel Type de Propriétaire Êtes-Vous ?</h2>
+                <div id="personalityQuiz">
+                    <div class="quiz-question">
+                        <h4>Combien de temps pouvez-vous consacrer à votre chien quotidiennement ?</h4>
+                        <div class="quiz-options">
+                            <div class="quiz-option" onclick="personalityAnswer(1)">Moins de 1h</div>
+                            <div class="quiz-option" onclick="personalityAnswer(2)">1-2h</div>
+                            <div class="quiz-option" onclick="personalityAnswer(3)">2-3h</div>
+                            <div class="quiz-option" onclick="personalityAnswer(4)">Plus de 3h</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-result" id="personalityResult">
+                    <h3 id="personalityResultText"></h3>
+                    <p id="personalityResultDesc"></p>
+                </div>
+            </div>
+
+            <!-- WALKER CALCULATOR -->
+            <div id="walkerGame" class="game-container">
+                <button class="back-to-games" onclick="backToGallery()">← Retour aux jeux</button>
+                <h2>🚶 Calculateur de Promenade</h2>
+                <div style="background: rgba(255,255,255,0.8); padding: 30px; border-radius: 25px; max-width: 600px; margin: 0 auto;">
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 10px; color: var(--dog-highlight);">⏱️ Durée de la promenade (minutes) :</label>
+                        <input type="number" id="walkDuration" value="30" min="5" max="120" style="width: 100%; padding: 15px; border-radius: 20px; border: 3px solid var(--surface); font-size: 1.2rem; text-align: center;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 10px; color: var(--dog-highlight);">🏃 Intensité :</label>
+                        <select id="walkIntensity" style="width: 100%; padding: 15px; border-radius: 20px; border: 3px solid var(--surface); font-size: 1.1rem;">
+                            <option value="slow">🚶 Lente (balade)</option>
+                            <option value="medium" selected>🏃 Moyenne (marche active)</option>
+                            <option value="fast">⚡ Rapide (jogging)</option>
+                        </select>
+                    </div>
+                    <button onclick="calculateWalk()" style="width: 100%; padding: 20px; background: var(--dog-highlight); color: white; border: none; border-radius: 25px; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                        Calculer 🐾
+                    </button>
+                    <div id="walkResult" style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, var(--paws), var(--surface)); border-radius: 25px; display: none;">
+                        <h3 style="color: white; margin-bottom: 15px; text-align: center;">Résultats</h3>
+                        <div style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 20px;">
+                            <p style="font-size: 1.1rem; margin: 10px 0;"><strong>📏 Distance estimée :</strong> <span id="walkDistance"></span></p>
+                            <p style="font-size: 1.1rem; margin: 10px 0;"><strong>🔥 Calories brûlées (Baggy) :</strong> <span id="walkCalories"></span></p>
+                            <p style="font-size: 1.1rem; margin: 10px 0;"><strong>🎯 Recommandation :</strong> <span id="walkRecommendation"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 8: CHECKLIST -->
+        <div id="checklist" class="tab-content">
+            <h2>✅ Checklist de Décision</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.1rem; color: var(--dog-highlight); font-weight: 600;">Cochez les critères que vous remplissez :</p>
+            
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>⏰ Disponibilité :</strong> Au moins 3h/jour pour le chien
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>💼 Télétravail :</strong> Horaires flexibles ou possibilité télétravail
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>💰 Budget :</strong> 200€/mois + 3000-5000€ première année
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>🏠 Espace :</strong> Duplex ou appartement adapté (Paris 2ème OK)
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>🌳 Proximité parcs :</strong> Accès facile aux espaces verts (Tuileries, Palais Royal)
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>👥 Support :</strong> Amis/famille pouvant aider ponctuellement
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>✈️ Vacances :</strong> Solution de garde (ami mini-ferme Mâcon)
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>💪 Engagement :</strong> Prêts pour 12-14 ans minimum
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>🎓 Éducation :</strong> Volonté de suivre école du chiot et éducation continue
+                    </div>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklistItem(this)">
+                    <div class="checklist-checkbox"></div>
+                    <div>
+                        <strong>🏃 Activité physique :</strong> Aimer marcher, courir, être actif
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-score-container">
+                <h3>Score de Préparation</h3>
+                <div class="checklist-score-value"><span id="checklistScore">0</span>/10</div>
+                <div class="readiness-message" id="readinessMessage">Cochez les items pour voir votre score</div>
+            </div>
+
+            <div class="alert-box" style="background: linear-gradient(135deg, var(--paws), var(--dog-highlight));">
+                <h3>🎯 Interprétation</h3>
+                <p><strong>8-10 cochés :</strong> ✅ VOUS ÊTES PRÊTS POUR BAGGY ! Tous les feux sont au vert ! 🎉<br>
+                <strong>5-7 cochés :</strong> ⚠️ POSSIBLE MAIS à réfléchir. Identifiez les points à améliorer.<br>
+                <strong>0-4 cochés :</strong> ❌ PAS ENCORE PRÊTS. Prenez le temps de vous préparer davantage.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Web Audio Context for dog sounds
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Dog interaction variables
+        let caresseTimer = null;
+        let isCaressing = false;
+        const sparkleEmojis = ['✨', '💕', '🐾', '💖', '⭐', '💗', '🌟'];
+
+        // Interactive Dog
+        const interactiveDog = document.getElementById('interactiveDog');
+        const affectionMessage = document.getElementById('affectionMessage');
+        const spotifyPlayer = document.getElementById('spotifyPlayer');
+
+        function playWouaf(type = 'normal') {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+            
+            oscillator.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            filter.type = 'lowpass';
+            
+            if (type === 'grave') {
+                oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(60, audioContext.currentTime + 0.25);
+                filter.frequency.value = 800;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.25);
+                oscillator.type = 'sawtooth';
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.25);
+            } else if (type === 'aigu') {
+                oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.15);
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+                oscillator.type = 'square';
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.15);
+            } else {
+                oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.2);
+                filter.frequency.value = 1000;
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                oscillator.type = 'sawtooth';
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+            }
+        }
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+            
+            const rect = interactiveDog.getBoundingClientRect();
+            sparkle.style.left = rect.left + rect.width/2 + (Math.random() - 0.5) * 100 + 'px';
+            sparkle.style.top = rect.top + rect.height/2 + (Math.random() - 0.5) * 100 + 'px';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 2000);
+        }
+
+        function startCaressing() {
+            isCaressing = true;
+            playWouaf('aigu');
+            interactiveDog.style.transform = 'scale(1.2) rotate(5deg)';
+            
+            // Show Spotify player
+            spotifyPlayer.style.display = 'block';
+            
+            // Create sparkles
+            const sparkleInterval = setInterval(() => {
+                if (isCaressing) {
+                    createSparkle();
+                } else {
+                    clearInterval(sparkleInterval);
+                }
+            }, 200);
+            
+            // Timer for 2 seconds
+            caresseTimer = setTimeout(() => {
+                affectionMessage.classList.add('show');
+                playWouaf('grave');
+            }, 2000);
+        }
+
+        function stopCaressing() {
+            isCaressing = false;
+            clearTimeout(caresseTimer);
+            interactiveDog.style.transform = '';
+            affectionMessage.classList.remove('show');
+            // Keep Spotify playing unless user closes it
+        }
+
+        // Mouse events
+        interactiveDog.addEventListener('mousedown', startCaressing);
+        interactiveDog.addEventListener('mouseup', stopCaressing);
+        interactiveDog.addEventListener('mouseleave', stopCaressing);
+
+        // Touch events
+        interactiveDog.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startCaressing();
+        });
+        interactiveDog.addEventListener('touchend', stopCaressing);
+        interactiveDog.addEventListener('touchcancel', stopCaressing);
+
+        // Tabs Navigation
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Quiz
+        let quizScore = 0;
+        let quizAnswered = 0;
+
+        function checkAnswer(element, isCorrect) {
+            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
+                return;
+            }
+            
+            quizAnswered++;
+            
+            if (isCorrect) {
+                element.classList.add('correct');
+                quizScore++;
+                playSound('happy');
+            } else {
+                element.classList.add('incorrect');
+            }
+            
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            if (quizAnswered === 4) {
+                setTimeout(() => {
+                    showQuizResult();
+                }, 1000);
+            }
+        }
+
+        function showQuizResult() {
+            const result = document.getElementById('quizResult');
+            const resultText = document.getElementById('quizResultText');
+            const resultDesc = document.getElementById('quizResultDesc');
+            
+            result.classList.add('show');
+            
+            if (quizScore === 4) {
+                resultText.textContent = '🏆 Parfait ! 4/4';
+                resultDesc.textContent = 'Vous êtes un expert des Staffies ! Baggy serait entre de bonnes mains ! 🐕💕';
+            } else if (quizScore >= 2) {
+                resultText.textContent = `👍 Bien joué ! ${quizScore}/4`;
+                resultDesc.textContent = 'Vous avez de bonnes connaissances sur les Staffies. Continuez à apprendre ! 📚';
+            } else {
+                resultText.textContent = `😅 ${quizScore}/4`;
+                resultDesc.textContent = 'Pas mal pour un début ! Consultez les autres sections pour en apprendre plus sur Baggy. 🐾';
+            }
+            
+            playWouaf('grave');
+        }
+
+        function playSound(type) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            if (type === 'happy') {
+                oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            }
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
+        }
+
+        // Games Gallery
+        function showGame(gameId) {
+            document.getElementById('gamesGallery').style.display = 'none';
+            document.getElementById(gameId + 'Game').classList.add('active');
+            
+            if (gameId === 'memory') {
+                initMemoryGame();
+            } else if (gameId === 'catch') {
+                initCatchGame();
+            }
+        }
+
+        function backToGallery() {
+            document.querySelectorAll('.game-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            document.getElementById('gamesGallery').style.display = 'block';
+        }
+
+        // Memory Game
+        const memoryCards = ['🐕', '🐕', '🦴', '🦴', '🐾', '🐾', '🎾', '🎾', '🍖', '🍖', '🏠', '🏠', '🎓', '🎓', '💕', '💕'];
+        let memoryFlippedCards = [];
+        let memoryMoves = 0;
+
+        function initMemoryGame() {
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            memoryMoves = 0;
+            document.getElementById('memoryScore').textContent = '0';
+            
+            const shuffled = memoryCards.sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach((emoji, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.emoji = emoji;
+                card.dataset.index = index;
+                card.textContent = '❓';
+                card.addEventListener('click', () => flipMemoryCard(card));
+                grid.appendChild(card);
+            });
+        }
+
+        function flipMemoryCard(card) {
+            if (card.classList.contains('flipped') || card.classList.contains('matched') || memoryFlippedCards.length >= 2) {
+                return;
+            }
+            
+            card.classList.add('flipped');
+            card.textContent = card.dataset.emoji;
+            memoryFlippedCards.push(card);
+            
+            if (memoryFlippedCards.length === 2) {
+                memoryMoves++;
+                document.getElementById('memoryScore').textContent = memoryMoves;
+                
+                const [card1, card2] = memoryFlippedCards;
+                
+                if (card1.dataset.emoji === card2.dataset.emoji) {
+                    setTimeout(() => {
+                        card1.classList.add('matched');
+                        card2.classList.add('matched');
+                        playSound('happy');
+                        memoryFlippedCards = [];
+                        
+                        if (document.querySelectorAll('.memory-card.matched').length === memoryCards.length) {
+                            setTimeout(() => {
+                                alert(`🎉 Bravo ! Vous avez terminé en ${memoryMoves} coups ! 🐕`);
+                            }, 500);
+                        }
+                    }, 500);
+                } else {
+                    setTimeout(() => {
+                        card1.classList.remove('flipped');
+                        card2.classList.remove('flipped');
+                        card1.textContent = '❓';
+                        card2.textContent = '❓';
+                        memoryFlippedCards = [];
+                    }, 1000);
+                }
+            }
+        }
+
+        // Catch Ball Game
+        let catchScore = 0;
+        let catchGameActive = false;
+
+        function initCatchGame() {
+            catchScore = 0;
+            document.getElementById('catchScore').textContent = '0';
+            catchGameActive = true;
+            
+            const container = document.getElementById('catchContainer');
+            const dog = document.getElementById('dogCatcher');
+            
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left - 30;
+                dog.style.left = Math.max(0, Math.min(x, rect.width - 60)) + 'px';
+            });
+            
+            setInterval(() => {
+                if (catchGameActive) {
+                    dropBall();
+                }
+            }, 1500);
+        }
+
+        function dropBall() {
+            const container = document.getElementById('catchContainer');
+            const ball = document.createElement('div');
+            ball.className = 'ball';
+            ball.textContent = '⚽';
+            ball.style.left = Math.random() * (container.offsetWidth - 50) + 'px';
+            container.appendChild(ball);
+            
+            const checkCatch = setInterval(() => {
+                const ballRect = ball.getBoundingClientRect();
+                const dogRect = document.getElementById('dogCatcher').getBoundingClientRect();
+                
+                if (ballRect.bottom >= dogRect.top &&
+                    ballRect.left >= dogRect.left &&
+                    ballRect.right <= dogRect.right) {
+                    catchScore++;
+                    document.getElementById('catchScore').textContent = catchScore;
+                    ball.remove();
+                    playSound('happy');
+                    clearInterval(checkCatch);
+                }
+                
+                if (ballRect.top > container.offsetHeight) {
+                    ball.remove();
+                    clearInterval(checkCatch);
+                }
+            }, 50);
+            
+            setTimeout(() => {
+                if (ball.parentElement) {
+                    ball.remove();
+                }
+                clearInterval(checkCatch);
+            }, 3000);
+        }
+
+        // Needs Game
+        let needsSelected = 0;
+        const correctNeeds = [true, true, false, true, true, false, true, false];
+
+        function selectNeed(element, isCorrect) {
+            if (element.classList.contains('correct') || element.classList.contains('incorrect')) {
+                return;
+            }
+            
+            needsSelected++;
+            
+            if (isCorrect) {
+                element.style.background = 'linear-gradient(135deg, var(--paws), var(--surface))';
+                element.classList.add('correct');
+                playSound('happy');
+            } else {
+                element.style.background = 'linear-gradient(135deg, var(--accent), var(--pattern-4))';
+                element.classList.add('incorrect');
+            }
+            
+            if (needsSelected === 8) {
+                setTimeout(() => {
+                    const correctCount = document.querySelectorAll('#needsGame .correct').length;
+                    const result = document.getElementById('needsResult');
+                    const resultText = document.getElementById('needsResultText');
+                    
+                    result.classList.add('show');
+                    if (correctCount === 5) {
+                        resultText.textContent = '🏆 Parfait ! Vous connaissez tous les besoins essentiels du Staffie ! 🐕💕';
+                    } else if (correctCount >= 3) {
+                        resultText.textContent = `👍 Bien ! ${correctCount}/5 besoins identifiés. Continuez à apprendre ! 📚`;
+                    } else {
+                        resultText.textContent = `😅 ${correctCount}/5. Consultez l'onglet Aperçu pour en savoir plus ! 🐾`;
+                    }
+                }, 500);
+            }
+        }
+
+        // Personality Quiz
+        let personalityScore = 0;
+
+        function personalityAnswer(score) {
+            personalityScore = score;
+            const result = document.getElementById('personalityResult');
+            const resultText = document.getElementById('personalityResultText');
+            const resultDesc = document.getElementById('personalityResultDesc');
+            
+            result.classList.add('show');
+            
+            if (score === 4) {
+                resultText.textContent = '🌟 Propriétaire Dévoué';
+                resultDesc.textContent = 'Vous avez le temps et l\'énergie parfaits pour un Staffie ! Baggy serait au paradis avec vous ! 🐕💕';
+            } else if (score === 3) {
+                resultText.textContent = '👍 Propriétaire Adapté';
+                resultDesc.textContent = 'Vous avez suffisamment de temps pour un Staffie. Avec un peu d\'organisation, c\'est parfait ! 🐾';
+            } else if (score === 2) {
+                resultText.textContent = '⚠️ Propriétaire Juste';
+                resultDesc.textContent = 'C\'est limite pour un Staffie très actif. Assurez-vous d\'avoir du support ! 🏃';
+            } else {
+                resultText.textContent = '❌ Pas Encore Prêt';
+                resultDesc.textContent = 'Un Staffie demande plus de temps. Attendez d\'avoir plus de disponibilités. ⏰';
+            }
+        }
+
+        // Walker Calculator
+        function calculateWalk() {
+            const duration = parseInt(document.getElementById('walkDuration').value);
+            const intensity = document.getElementById('walkIntensity').value;
+            
+            let speed, calories;
+            if (intensity === 'slow') {
+                speed = 4;
+                calories = 100;
+            } else if (intensity === 'medium') {
+                speed = 5.5;
+                calories = 150;
+            } else {
+                speed = 8;
+                calories = 250;
+            }
+            
+            const distance = (speed * duration / 60).toFixed(2);
+            const totalCalories = Math.round(calories * duration / 60);
+            
+            document.getElementById('walkDistance').textContent = distance + ' km';
+            document.getElementById('walkCalories').textContent = totalCalories + ' kcal';
+            
+            let recommendation;
+            if (duration < 20) {
+                recommendation = '⚠️ Trop court ! Un Staffie a besoin de sorties plus longues.';
+            } else if (duration >= 20 && duration < 40) {
+                recommendation = '✅ Bon pour une sortie courte, mais prévoyez d\'autres sorties dans la journée !';
+            } else if (duration >= 40 && duration < 90) {
+                recommendation = '🌟 Parfait ! Durée idéale pour une grande sortie de Staffie !';
+            } else {
+                recommendation = '💪 Excellent ! Baggy sera ravi et bien fatigué ! Pensez à des pauses eau.';
+            }
+            
+            document.getElementById('walkRecommendation').textContent = recommendation;
+            document.getElementById('walkResult').style.display = 'block';
+        }
+
+        // Checklist
+        let checklistCount = 0;
+
+        function toggleChecklistItem(element) {
+            element.classList.toggle('checked');
+            
+            const checkbox = element.querySelector('.checklist-checkbox');
+            if (element.classList.contains('checked')) {
+                checkbox.textContent = '✓';
+                checklistCount++;
+                playSound('happy');
+            } else {
+                checkbox.textContent = '';
+                checklistCount--;
+            }
+            
+            updateChecklistScore();
+        }
+
+        function updateChecklistScore() {
+            document.getElementById('checklistScore').textContent = checklistCount;
+            const message = document.getElementById('readinessMessage');
+            
+            if (checklistCount >= 8) {
+                message.textContent = '✅ VOUS ÊTES PRÊTS POUR BAGGY ! 🎉🐕💕';
+                message.style.color = 'var(--paws)';
+            } else if (checklistCount >= 5) {
+                message.textContent = '⚠️ POSSIBLE MAIS réfléchir aux points non cochés';
+                message.style.color = 'var(--accent)';
+            } else if (checklistCount > 0) {
+                message.textContent = '❌ PAS ENCORE PRÊTS - Prenez le temps de vous préparer';
+                message.style.color = 'var(--pattern-4)';
+            } else {
+                message.textContent = 'Cochez les items pour voir votre score';
+                message.style.color = 'white';
+            }
+        }
+
+        // Lazy loading for images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    </script>
+</body>
+</html>
