@@ -200,7 +200,7 @@
         .dog-emoji {
             width: 150px;
             height: 150px;
-            cursor: pointer;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><text x="0" y="40" font-size="40">👋</text></svg>') 24 24, pointer;
             transition: all 0.3s ease;
             user-select: none;
             display: inline-block;
@@ -213,12 +213,18 @@
 
         .dog-emoji:active {
             transform: scale(1.15) rotate(-5deg);
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><text x="0" y="40" font-size="40">✊</text></svg>') 24 24, pointer;
+        }
+
+        .dog-emoji.caressing {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><text x="0" y="40" font-size="40">✊</text></svg>') 24 24, pointer;
         }
 
         .sparkles {
             position: absolute;
             pointer-events: none;
             font-size: 30px;
+            z-index: 100;
         }
 
         @keyframes float {
@@ -239,6 +245,19 @@
             margin-top: 15px;
             font-size: 1.1rem;
             color: #666;
+        }
+
+        /* SPOTIFY EMBED */
+        .spotify-player {
+            margin-top: 30px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .spotify-player.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* STATS GRID */
@@ -756,10 +775,17 @@
                 
                 <div class="message" id="dogMessage">Clique sur moi et garde le doigt appuyé ! 🐾</div>
                 
-                <!-- Audio Element for Spotify (hidden) -->
-                <audio id="spotifyAudio" style="display: none;">
-                    <source src="https://p.scdn.co/mp3-preview/8a0f8f3a3c3e7c0d8f9e8f9e8f9e8f9e8f9e8f9e" type="audio/mpeg">
-                </audio>
+                <!-- Spotify Embed (hidden by default) -->
+                <div class="spotify-player" id="spotifyPlayer">
+                    <iframe style="border-radius:12px" 
+                            src="https://open.spotify.com/embed/track/1H5tvpoApNDxvxDexoaAUo?utm_source=generator&autoplay=1" 
+                            width="100%" 
+                            height="152" 
+                            frameBorder="0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy"></iframe>
+                </div>
             </div>
 
             <div class="card">
@@ -869,46 +895,89 @@
         <!-- TAB 3: VIDÉOS -->
         <div id="videos" class="tab-content">
             <div class="card">
-                <h2>🎥 Vidéos Éducatives</h2>
+                <h2>🎥 Vidéos Éducatives sur le Staffie</h2>
                 
                 <div class="video-grid">
+                    <!-- Vidéo personnelle de Lucile & Baggy -->
+                    <div class="video-card">
+                        <video controls>
+                            <source src="https://raw.githubusercontent.com/ThibautMelen/baggy-staffie-guide/main/assets/lucile-baggy.mp4" type="video/mp4">
+                            Votre navigateur ne supporte pas la lecture de vidéos.
+                        </video>
+                        <div class="video-title">💕 Lucile avec Baggy</div>
+                    </div>
+
+                    <!-- Vidéos YouTube éducatives -->
                     <div class="video-card">
                         <iframe 
-                            src="https://www.youtube.com/embed/qGW3gN_zF8E?rel=0&modestbranding=1" 
+                            src="https://www.youtube.com/embed/3TeE1Evvrdo?rel=0&modestbranding=1" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen
                             loading="lazy"></iframe>
-                        <div class="video-title">📚 Tout savoir sur le Staffie</div>
+                        <div class="video-title">📚 Tout savoir sur le Staffie - EDUC DOG</div>
                     </div>
                     
                     <div class="video-card">
                         <iframe 
-                            src="https://www.youtube.com/embed/3dMKR5i9bbM?rel=0&modestbranding=1" 
+                            src="https://www.youtube.com/embed/YmfPagYWSos?rel=0&modestbranding=1" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen
                             loading="lazy"></iframe>
-                        <div class="video-title">🎓 Éducation de base du chiot</div>
+                        <div class="video-title">🎓 Dressage Staffie : ordres de base</div>
                     </div>
                     
                     <div class="video-card">
                         <iframe 
-                            src="https://www.youtube.com/embed/k0eeJct78Ys?rel=0&modestbranding=1" 
+                            src="https://www.youtube.com/embed/8av9cwDHbBw?rel=0&modestbranding=1" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen
                             loading="lazy"></iframe>
-                        <div class="video-title">🏠 Vie en appartement avec un Staffie</div>
+                        <div class="video-title">🐕 Apprendre les ordres - Maka's World</div>
                     </div>
                     
                     <div class="video-card">
-                        <div style="padding: 80px 20px; text-align: center; background: var(--surface); color: var(--dog);">
-                            <div style="font-size: 60px; margin-bottom: 20px;">🎥</div>
-                            <strong>Vidéo de Baggy</strong><br>
-                            <small style="display: block; margin-top: 10px; color: #666;">
-                                📌 Téléchargez la vidéo depuis Notion et uploadez-la dans<br>
-                                <code style="background: white; padding: 5px; border-radius: 5px;">/assets/videos/baggy-video.mp4</code>
-                            </small>
-                        </div>
-                        <div class="video-title">🐕 Vidéo de Baggy (à ajouter)</div>
+                        <iframe 
+                            src="https://www.youtube.com/embed/i-ntNoIIkwc?rel=0&modestbranding=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"></iframe>
+                        <div class="video-title">🦴 Apprentissage laisse en 4 étapes</div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <iframe 
+                            src="https://www.youtube.com/embed/bkPUz6wmdFA?rel=0&modestbranding=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"></iframe>
+                        <div class="video-title">💤 Un Staffie ça ne se calme jamais ?</div>
+                    </div>
+
+                    <div class="video-card">
+                        <iframe 
+                            src="https://www.youtube.com/embed/s2z3ge9l_X0?rel=0&modestbranding=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"></iframe>
+                        <div class="video-title">🎯 Éducation Staffie complète</div>
+                    </div>
+
+                    <div class="video-card">
+                        <iframe 
+                            src="https://www.youtube.com/embed/rZL7lAgr4oo?rel=0&modestbranding=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"></iframe>
+                        <div class="video-title">🏋️ Exercices pour Staffie</div>
+                    </div>
+
+                    <div class="video-card">
+                        <iframe 
+                            src="https://www.youtube.com/embed/GgjliWbtkmY?rel=0&modestbranding=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"></iframe>
+                        <div class="video-title">🦮 Socialisation du Staffie</div>
                     </div>
                 </div>
             </div>
@@ -1464,26 +1533,31 @@
         const dogEmoji = document.getElementById('interactiveDog');
         const dogContainer = document.getElementById('dogContainer');
         const dogMessage = document.getElementById('dogMessage');
+        const spotifyPlayer = document.getElementById('spotifyPlayer');
         
         let caressingTimer = null;
         let isCaressing = false;
         let hasPlayedMusic = false;
+        let sparkleInterval = null;
 
-        const sparkleEmojis = ['✨', '💕', '🐾', '💖', '⭐', '💫', '🌟'];
+        const sparkleEmojis = ['✨', '💕', '🐾', '💖', '⭐', '💫', '🌟', '🐕', '❤️', '😍'];
 
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkles';
             sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
-            sparkle.style.left = (x - dogContainer.getBoundingClientRect().left) + 'px';
-            sparkle.style.top = (y - dogContainer.getBoundingClientRect().top) + 'px';
+            
+            const containerRect = dogContainer.getBoundingClientRect();
+            sparkle.style.left = (x - containerRect.left) + 'px';
+            sparkle.style.top = (y - containerRect.top) + 'px';
             sparkle.style.animation = 'float 1.5s ease-out forwards';
+            
             dogContainer.appendChild(sparkle);
             
             setTimeout(() => sparkle.remove(), 1500);
         }
 
-        function playWouafSound(type = 1) {
+        function playWouafSound() {
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
@@ -1494,81 +1568,62 @@
             gainNode.connect(audioContext.destination);
             
             filter.type = 'lowpass';
-            
-            if (type === 1) {
-                // Wouaf grave
-                oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(60, audioContext.currentTime + 0.25);
-                filter.frequency.value = 800;
-                oscillator.type = 'sawtooth';
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.25);
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.25);
-            } else if (type === 2) {
-                // Wouaf aigu
-                oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.15);
-                oscillator.type = 'square';
-                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.15);
-            } else {
-                // Double wouaf
-                oscillator.frequency.setValueAtTime(180, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(70, audioContext.currentTime + 0.2);
-                oscillator.type = 'sawtooth';
-                gainNode.gain.setValueAtTime(0.25, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.2);
-                
-                setTimeout(() => {
-                    const osc2 = audioContext.createOscillator();
-                    const gain2 = audioContext.createGain();
-                    const filt2 = audioContext.createBiquadFilter();
-                    osc2.connect(filt2);
-                    filt2.connect(gain2);
-                    gain2.connect(audioContext.destination);
-                    filt2.type = 'lowpass';
-                    filt2.frequency.value = 800;
-                    osc2.frequency.setValueAtTime(200, audioContext.currentTime);
-                    osc2.frequency.exponentialRampToValueAtTime(75, audioContext.currentTime + 0.2);
-                    osc2.type = 'sawtooth';
-                    gain2.gain.setValueAtTime(0.25, audioContext.currentTime);
-                    gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                    osc2.start(audioContext.currentTime);
-                    osc2.stop(audioContext.currentTime + 0.2);
-                }, 200);
-            }
+            filter.frequency.value = 800;
+            oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.2);
+            oscillator.type = 'sawtooth';
+            gainNode.gain.setValueAtTime(0.25, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
         }
 
-        function playSpotifyMusic() {
-            // Open Spotify in new tab after 2 seconds of caressing
-            window.open('https://open.spotify.com/track/1H5tvpoApNDxvxDexoaAUo', '_blank');
+        function showSpotifyPlayer() {
+            spotifyPlayer.classList.add('active');
+            dogMessage.textContent = "🎵 Baggy adore cette musique ! Continue de me caresser ! 💕";
+            
+            // Continuous sparkles while caressing
+            sparkleInterval = setInterval(() => {
+                if (isCaressing) {
+                    const rect = dogEmoji.getBoundingClientRect();
+                    createSparkle(
+                        rect.left + Math.random() * rect.width,
+                        rect.top + Math.random() * rect.height
+                    );
+                }
+            }, 200);
+        }
+
+        function hideSpotifyPlayer() {
+            spotifyPlayer.classList.remove('active');
+            if (sparkleInterval) {
+                clearInterval(sparkleInterval);
+                sparkleInterval = null;
+            }
         }
 
         function startCaressing(event) {
             event.preventDefault();
             isCaressing = true;
+            
+            dogEmoji.classList.add('caressing');
+            
             const rect = dogEmoji.getBoundingClientRect();
             const x = event.clientX || (event.touches && event.touches[0].clientX) || rect.left + rect.width/2;
             const y = event.clientY || (event.touches && event.touches[0].clientY) || rect.top + rect.height/2;
             
             createSparkle(x, y);
-            playWouafSound(Math.floor(Math.random() * 3) + 1);
+            playWouafSound();
             
             dogMessage.textContent = "Continue à me caresser... 🐾💕";
             
             if (!hasPlayedMusic) {
                 caressingTimer = setTimeout(() => {
                     if (isCaressing) {
-                        playSpotifyMusic();
-                        dogMessage.textContent = "🐕 Baggy : Wouaf ! J'adore les câlins ! 💕🎵";
+                        showSpotifyPlayer();
                         hasPlayedMusic = true;
                         
-                        for (let i = 0; i < 15; i++) {
+                        for (let i = 0; i < 20; i++) {
                             setTimeout(() => {
                                 const rect = dogEmoji.getBoundingClientRect();
                                 createSparkle(
@@ -1584,13 +1639,20 @@
 
         function stopCaressing() {
             isCaressing = false;
+            dogEmoji.classList.remove('caressing');
             
             if (caressingTimer && !hasPlayedMusic) {
                 clearTimeout(caressingTimer);
                 dogMessage.textContent = "Continue un peu plus longtemps ! 🐾";
             }
             
-            if (!hasPlayedMusic) {
+            if (hasPlayedMusic) {
+                hideSpotifyPlayer();
+                dogMessage.textContent = "Merci pour les câlins ! Recommence quand tu veux ! 🐕💕";
+                hasPlayedMusic = false;
+            }
+            
+            if (!hasPlayedMusic && !isCaressing) {
                 setTimeout(() => {
                     if (!isCaressing) {
                         dogMessage.textContent = "Clique sur moi et garde le doigt appuyé ! 🐾";
@@ -1611,6 +1673,12 @@
             }
         });
 
+        dogEmoji.addEventListener('touchmove', (e) => {
+            if (isCaressing && e.touches[0]) {
+                createSparkle(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: false });
+
         // ==================== QUIZ ====================
         let quizScore = 0;
         let quizAnswered = 0;
@@ -1620,13 +1688,11 @@
             const question = button.closest('.question');
             const buttons = question.querySelectorAll('.answer-btn');
             
-            // Disable all buttons in this question
             buttons.forEach(btn => {
                 btn.disabled = true;
                 btn.style.cursor = 'default';
             });
             
-            // Mark the clicked button
             if (isCorrect) {
                 button.classList.add('correct');
                 quizScore++;
@@ -1635,7 +1701,6 @@
                 button.classList.add('incorrect');
             }
             
-            // Mark the correct answer
             buttons.forEach(btn => {
                 if (btn.textContent.includes('2h30 minimum') || 
                     btn.textContent.includes('Nanny Dog') || 
@@ -1749,7 +1814,6 @@
             scoreDiv.classList.add(className);
         }
 
-        // Initialize checklist score display
         updateChecklistScore();
     </script>
 </body>
