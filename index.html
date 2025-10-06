@@ -198,11 +198,13 @@
         }
 
         .dog-emoji {
-            font-size: 150px;
+            width: 150px;
+            height: 150px;
             cursor: pointer;
             transition: all 0.3s ease;
             user-select: none;
             display: inline-block;
+            object-fit: contain;
         }
 
         .dog-emoji:hover {
@@ -689,22 +691,8 @@
             .tabs { gap: 8px; }
             .tab-btn { padding: 10px 16px; font-size: 0.9rem; }
             .comparison-grid { grid-template-columns: 1fr; }
-            .dog-emoji { font-size: 100px; }
+            .dog-emoji { width: 100px; height: 100px; }
             .stats-grid { grid-template-columns: 1fr; }
-        }
-
-        /* SPOTIFY EMBED */
-        .spotify-embed {
-            position: fixed;
-            bottom: -500px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            transition: bottom 0.5s ease;
-        }
-
-        .spotify-embed.active {
-            bottom: 20px;
         }
 
         /* ALERT */
@@ -760,10 +748,18 @@
                 <p class="instruction">👆 Caresse Baggy pendant 2 secondes pour une surprise musicale ! 🎵</p>
                 
                 <div class="dog-container" id="dogContainer">
-                    <div class="dog-emoji" id="interactiveDog">🐕‍🦺</div>
+                    <img src="https://raw.githubusercontent.com/ThibautMelen/baggy-staffie-guide/refs/heads/main/assets/baggy-emoji.webp" 
+                         alt="Baggy" 
+                         class="dog-emoji" 
+                         id="interactiveDog">
                 </div>
                 
                 <div class="message" id="dogMessage">Clique sur moi et garde le doigt appuyé ! 🐾</div>
+                
+                <!-- Audio Element for Spotify (hidden) -->
+                <audio id="spotifyAudio" style="display: none;">
+                    <source src="https://p.scdn.co/mp3-preview/8a0f8f3a3c3e7c0d8f9e8f9e8f9e8f9e8f9e8f9e" type="audio/mpeg">
+                </audio>
             </div>
 
             <div class="card">
@@ -837,24 +833,34 @@
                 
                 <div class="gallery">
                     <div class="gallery-item">
-                        <img src="./assets/images/staffie-adulte.jpg" alt="Staffie adulte" onerror="this.src='https://via.placeholder.com/400x300/BFC6F1/C4547D?text=Staffie+Adulte+🐕'">
-                        <div class="gallery-caption">🐕 Staffie adulte majestueux</div>
+                        <img src="https://raw.githubusercontent.com/ThibautMelen/baggy-staffie-guide/refs/heads/main/assets/baggy-adult.JPG" 
+                             alt="Baggy adulte"
+                             loading="lazy">
+                        <div class="gallery-caption">🐕 Baggy - Notre futur Staffie</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="./assets/images/staffie-chiot.jpg" alt="Staffie chiot" onerror="this.src='https://via.placeholder.com/400x300/FFD757/C4547D?text=Chiot+Staffie+🐾'">
-                        <div class="gallery-caption">🐾 Chiot Staffie adorable</div>
+                        <img src="https://raw.githubusercontent.com/ThibautMelen/baggy-staffie-guide/refs/heads/main/assets/baggy-chiot.JPG.jpg" 
+                             alt="Baggy chiot"
+                             loading="lazy">
+                        <div class="gallery-caption">🐾 Baggy quand il était chiot</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="./assets/images/lucile-baggy.png" alt="Lucile et Baggy" onerror="this.src='https://via.placeholder.com/400x300/A5DBF8/C4547D?text=Lucile+%26+Baggy+💕'">
-                        <div class="gallery-caption">💕 Lucile et Baggy - Coup de cœur</div>
+                        <img src="https://raw.githubusercontent.com/ThibautMelen/baggy-staffie-guide/refs/heads/main/assets/baggy-emoji.webp" 
+                             alt="Baggy emoji"
+                             loading="lazy">
+                        <div class="gallery-caption">😊 Baggy emoji - Notre mascotte !</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="./assets/images/photo-baggy.jpg" alt="Photo de Baggy" onerror="this.src='https://via.placeholder.com/400x300/FF9DA7/C4547D?text=Baggy+Portrait+📸'">
-                        <div class="gallery-caption">📸 Portrait de Baggy</div>
+                        <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=500&h=400&fit=crop" 
+                             alt="Staffie illustration"
+                             loading="lazy">
+                        <div class="gallery-caption">🎨 Staffordshire Bull Terrier</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="./assets/images/illustration-staffie.png" alt="Illustration Staffie" onerror="this.src='https://via.placeholder.com/400x300/9DF0B3/C4547D?text=Illustration+Staffie+🎨'">
-                        <div class="gallery-caption">🎨 Illustration Neo Memphis Staffie</div>
+                        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=500&h=400&fit=crop" 
+                             alt="Staffie dans la nature"
+                             loading="lazy">
+                        <div class="gallery-caption">🌳 Staffie en promenade</div>
                     </div>
                 </div>
             </div>
@@ -867,26 +873,42 @@
                 
                 <div class="video-grid">
                     <div class="video-card">
-                        <video controls>
-                            <source src="./assets/videos/baggy-video.mp4" type="video/mp4">
-                            Votre navigateur ne supporte pas la vidéo.
-                        </video>
-                        <div class="video-title">🐕 Vidéo de Baggy</div>
-                    </div>
-                    
-                    <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/qGW3gN_zF8E" allowfullscreen></iframe>
+                        <iframe 
+                            src="https://www.youtube.com/embed/qGW3gN_zF8E?rel=0&modestbranding=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"></iframe>
                         <div class="video-title">📚 Tout savoir sur le Staffie</div>
                     </div>
                     
                     <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/3dMKR5i9bbM" allowfullscreen></iframe>
+                        <iframe 
+                            src="https://www.youtube.com/embed/3dMKR5i9bbM?rel=0&modestbranding=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"></iframe>
                         <div class="video-title">🎓 Éducation de base du chiot</div>
                     </div>
                     
                     <div class="video-card">
-                        <iframe src="https://www.youtube.com/embed/k0eeJct78Ys" allowfullscreen></iframe>
+                        <iframe 
+                            src="https://www.youtube.com/embed/k0eeJct78Ys?rel=0&modestbranding=1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"></iframe>
                         <div class="video-title">🏠 Vie en appartement avec un Staffie</div>
+                    </div>
+                    
+                    <div class="video-card">
+                        <div style="padding: 80px 20px; text-align: center; background: var(--surface); color: var(--dog);">
+                            <div style="font-size: 60px; margin-bottom: 20px;">🎥</div>
+                            <strong>Vidéo de Baggy</strong><br>
+                            <small style="display: block; margin-top: 10px; color: #666;">
+                                📌 Téléchargez la vidéo depuis Notion et uploadez-la dans<br>
+                                <code style="background: white; padding: 5px; border-radius: 5px;">/assets/videos/baggy-video.mp4</code>
+                            </small>
+                        </div>
+                        <div class="video-title">🐕 Vidéo de Baggy (à ajouter)</div>
                     </div>
                 </div>
             </div>
@@ -1112,28 +1134,28 @@
                         <div class="park-name">🏛️ Jardin du Palais Royal</div>
                         <div class="park-distance">📍 5 minutes à pied</div>
                         <p style="margin: 10px 0; color: #666;">Jardin calme et élégant, parfait pour promenades courtes. Attention: chiens en laisse obligatoire.</p>
-                        <a href="https://www.google.com/maps/dir//Jardin+du+Palais+Royal,+Paris/" target="_blank" class="map-link">📍 Ouvrir dans Maps</a>
+                        <a href="https://www.google.com/maps/dir//Jardin+du+Palais+Royal,+75001+Paris/@48.8628968,2.3366678,17z" target="_blank" rel="noopener noreferrer" class="map-link">📍 Ouvrir dans Maps</a>
                     </div>
                     
                     <div class="park-card">
                         <div class="park-name">🌺 Jardin des Tuileries</div>
                         <div class="park-distance">📍 15 minutes à pied</div>
                         <p style="margin: 10px 0; color: #666;">Grand parc avec allées spacieuses, idéal pour longues promenades. Chiens en laisse.</p>
-                        <a href="https://www.google.com/maps/dir//Jardin+des+Tuileries,+Paris/" target="_blank" class="map-link">📍 Ouvrir dans Maps</a>
+                        <a href="https://www.google.com/maps/dir//Jardin+des+Tuileries,+75001+Paris/@48.8634043,2.3274773,16z" target="_blank" rel="noopener noreferrer" class="map-link">📍 Ouvrir dans Maps</a>
                     </div>
                     
                     <div class="park-card">
                         <div class="park-name">🌳 Parc Monceau</div>
                         <div class="park-distance">📍 20 minutes en métro (ligne 2)</div>
                         <p style="margin: 10px 0; color: #666;">Magnifique parc avec pelouses, parfait pour socialisation avec autres chiens.</p>
-                        <a href="https://www.google.com/maps/dir//Parc+Monceau,+Paris/" target="_blank" class="map-link">📍 Ouvrir dans Maps</a>
+                        <a href="https://www.google.com/maps/dir//Parc+Monceau,+75008+Paris/@48.8798836,2.3082778,16z" target="_blank" rel="noopener noreferrer" class="map-link">📍 Ouvrir dans Maps</a>
                     </div>
                     
                     <div class="park-card">
                         <div class="park-name">🌲 Bois de Vincennes</div>
                         <div class="park-distance">📍 25 minutes en métro (ligne 1)</div>
                         <p style="margin: 10px 0; color: #666;">Immense espace naturel avec zones autorisées sans laisse ! Idéal week-ends.</p>
-                        <a href="https://www.google.com/maps/dir//Bois+de+Vincennes,+Paris/" target="_blank" class="map-link">📍 Ouvrir dans Maps</a>
+                        <a href="https://www.google.com/maps/dir//Bois+de+Vincennes,+75012+Paris/@48.8279374,2.4329365,14z" target="_blank" rel="noopener noreferrer" class="map-link">📍 Ouvrir dans Maps</a>
                     </div>
                 </div>
 
@@ -1419,14 +1441,6 @@
         </div>
     </div>
 
-    <!-- Spotify Embed (Hidden by default) -->
-    <div class="spotify-embed" id="spotifyEmbed">
-        <iframe src="https://open.spotify.com/embed/track/1H5tvpoApNDxvxDexoaAUo?utm_source=generator" 
-                width="300" height="152" frameborder="0" allowfullscreen="" 
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                loading="lazy"></iframe>
-    </div>
-
     <script>
         // ==================== TAB NAVIGATION ====================
         function openTab(evt, tabName) {
@@ -1450,7 +1464,6 @@
         const dogEmoji = document.getElementById('interactiveDog');
         const dogContainer = document.getElementById('dogContainer');
         const dogMessage = document.getElementById('dogMessage');
-        const spotifyEmbed = document.getElementById('spotifyEmbed');
         
         let caressingTimer = null;
         let isCaressing = false;
@@ -1462,8 +1475,8 @@
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkles';
             sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
-            sparkle.style.left = (x - dogContainer.offsetLeft) + 'px';
-            sparkle.style.top = (y - dogContainer.offsetTop) + 'px';
+            sparkle.style.left = (x - dogContainer.getBoundingClientRect().left) + 'px';
+            sparkle.style.top = (y - dogContainer.getBoundingClientRect().top) + 'px';
             sparkle.style.animation = 'float 1.5s ease-out forwards';
             dogContainer.appendChild(sparkle);
             
@@ -1514,8 +1527,12 @@
                 setTimeout(() => {
                     const osc2 = audioContext.createOscillator();
                     const gain2 = audioContext.createGain();
-                    osc2.connect(gain2);
+                    const filt2 = audioContext.createBiquadFilter();
+                    osc2.connect(filt2);
+                    filt2.connect(gain2);
                     gain2.connect(audioContext.destination);
+                    filt2.type = 'lowpass';
+                    filt2.frequency.value = 800;
                     osc2.frequency.setValueAtTime(200, audioContext.currentTime);
                     osc2.frequency.exponentialRampToValueAtTime(75, audioContext.currentTime + 0.2);
                     osc2.type = 'sawtooth';
@@ -1527,11 +1544,17 @@
             }
         }
 
+        function playSpotifyMusic() {
+            // Open Spotify in new tab after 2 seconds of caressing
+            window.open('https://open.spotify.com/track/1H5tvpoApNDxvxDexoaAUo', '_blank');
+        }
+
         function startCaressing(event) {
+            event.preventDefault();
             isCaressing = true;
             const rect = dogEmoji.getBoundingClientRect();
-            const x = event.clientX || (event.touches && event.touches[0].clientX);
-            const y = event.clientY || (event.touches && event.touches[0].clientY);
+            const x = event.clientX || (event.touches && event.touches[0].clientX) || rect.left + rect.width/2;
+            const y = event.clientY || (event.touches && event.touches[0].clientY) || rect.top + rect.height/2;
             
             createSparkle(x, y);
             playWouafSound(Math.floor(Math.random() * 3) + 1);
@@ -1541,12 +1564,13 @@
             if (!hasPlayedMusic) {
                 caressingTimer = setTimeout(() => {
                     if (isCaressing) {
-                        spotifyEmbed.classList.add('active');
+                        playSpotifyMusic();
                         dogMessage.textContent = "🐕 Baggy : Wouaf ! J'adore les câlins ! 💕🎵";
                         hasPlayedMusic = true;
                         
-                        for (let i = 0; i < 10; i++) {
+                        for (let i = 0; i < 15; i++) {
                             setTimeout(() => {
+                                const rect = dogEmoji.getBoundingClientRect();
                                 createSparkle(
                                     rect.left + Math.random() * rect.width,
                                     rect.top + Math.random() * rect.height
@@ -1563,7 +1587,6 @@
             
             if (caressingTimer && !hasPlayedMusic) {
                 clearTimeout(caressingTimer);
-                spotifyEmbed.classList.remove('active');
                 dogMessage.textContent = "Continue un peu plus longtemps ! 🐾";
             }
             
@@ -1577,7 +1600,7 @@
         }
 
         dogEmoji.addEventListener('mousedown', startCaressing);
-        dogEmoji.addEventListener('touchstart', startCaressing, { passive: true });
+        dogEmoji.addEventListener('touchstart', startCaressing, { passive: false });
         
         document.addEventListener('mouseup', stopCaressing);
         document.addEventListener('touchend', stopCaressing);
