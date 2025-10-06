@@ -1122,6 +1122,57 @@
             .score-value { font-size: 2.5rem; }
             
             .comparison-grid { grid-template-columns: 1fr; }
+
+            /* RESPONSIVE GAMES */
+            .game-inner {
+                width: 95%;
+                padding: 24px 16px;
+                margin: 10px auto;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+
+            .game-close {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+                top: 10px;
+                right: 10px;
+            }
+
+            .game-header h3 {
+                font-size: 1.5rem;
+            }
+
+            .game-header p {
+                font-size: 0.875rem;
+            }
+
+            #catchballCanvas {
+                width: 100% !important;
+                height: auto !important;
+                max-width: 320px;
+            }
+
+            #obstaclesCanvas {
+                width: 100% !important;
+                height: auto !important;
+                max-width: 100%;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .memory-card {
+                font-size: 36px;
+            }
+
+            #simonGame .play-btn {
+                padding: 30px !important;
+                font-size: 48px !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1129,7 +1180,38 @@
             .subtitle { font-size: 0.875rem; }
             .dog-emoji { width: 120px; height: 120px; }
             .stat-icon { font-size: 40px; }
-            .memory-card { font-size: 36px; }
+
+            .game-inner {
+                padding: 20px 12px;
+            }
+
+            .game-header {
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+
+            .memory-card {
+                font-size: 28px;
+                aspect-ratio: 1;
+            }
+
+            #baggyhungry {
+                font-size: 80px !important;
+            }
+
+            #catchballCanvas {
+                max-width: 280px;
+            }
+
+            .play-btn {
+                padding: 10px 16px;
+                font-size: 0.813rem;
+            }
         }
     </style>
 </head>
@@ -1699,6 +1781,33 @@
                             <button class="play-btn">🎮 Jouer</button>
                         </div>
                     </div>
+                    
+                    <div class="minigame-card" onclick="showGame('couple')">
+                        <div class="minigame-icon">👫</div>
+                        <div class="minigame-title">Test de Compatibilité Couple</div>
+                        <div class="minigame-desc">Thibaut & Lucile : êtes-vous prêts pour Baggy ?</div>
+                        <div class="minigame-play">
+                            <button class="play-btn">🎮 Jouer à 2</button>
+                        </div>
+                    </div>
+                    
+                    <div class="minigame-card" onclick="showGame('budgetchallenge')">
+                        <div class="minigame-icon">💰</div>
+                        <div class="minigame-title">Budget Challenge</div>
+                        <div class="minigame-desc">Gérez vos dépenses sur 6 mois sans dépasser !</div>
+                        <div class="minigame-play">
+                            <button class="play-btn">🎮 Jouer</button>
+                        </div>
+                    </div>
+                    
+                    <div class="minigame-card" onclick="showGame('decisions')">
+                        <div class="minigame-icon">⏱️</div>
+                        <div class="minigame-title">Décisions Rapides</div>
+                        <div class="minigame-desc">Situations d'urgence ! Que feriez-vous ? En duo !</div>
+                        <div class="minigame-play">
+                            <button class="play-btn">🎮 Jouer à 2</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- QUIZ GAME -->
@@ -1803,6 +1912,60 @@
                         <div style="text-align: center;">
                             <p><strong>Niveau:</strong> <span id="simonLevel">0</span> | <strong>État:</strong> <span id="simonStatus">Prêt</span></p>
                             <button class="play-btn" onclick="initSimonGame()">🔄 Nouvelle Partie</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COUPLE COMPATIBILITY GAME -->
+                <div id="coupleGame" class="game-container">
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>👫 Test de Compatibilité Couple</h3>
+                            <p>Répondez à tour de rôle et découvrez votre score !</p>
+                        </div>
+                        <div id="coupleQuestions"></div>
+                        <div id="coupleScore" style="text-align: center; margin-top: 20px; display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- BUDGET CHALLENGE GAME -->
+                <div id="budgetchallengeGame" class="game-container">
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>💰 Budget Challenge</h3>
+                            <p>Gérez votre budget Baggy sur 6 mois sans dépasser 2500€</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="margin: 20px 0;">
+                                <p><strong>Mois:</strong> <span id="budgetMonth">1</span>/6 | <strong>Budget restant:</strong> <span id="budgetRemaining">2500</span>€</p>
+                                <div style="background: var(--border); height: 30px; border-radius: 15px; overflow: hidden; max-width: 500px; margin: 20px auto;">
+                                    <div id="budgetBar" style="width: 100%; height: 100%; background: var(--gradient-4); transition: width 0.3s;"></div>
+                                </div>
+                            </div>
+                            <div id="budgetEvent" style="min-height: 200px; padding: 20px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 12px; margin: 20px 0;"></div>
+                            <div id="budgetChoices" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;"></div>
+                            <div id="budgetResult" style="margin-top: 20px; display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QUICK DECISIONS GAME -->
+                <div id="decisionsGame" class="game-container">
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>⏱️ Décisions Rapides - Mode Duo</h3>
+                            <p>Choisissez ensemble la bonne décision en 10 secondes !</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="margin: 20px 0;">
+                                <p><strong>Score:</strong> <span id="decisionScore">0</span>/5 | <strong>Temps:</strong> <span id="decisionTimer">10</span>s</p>
+                            </div>
+                            <div id="decisionSituation" style="min-height: 150px; padding: 30px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; margin: 20px 0; font-size: 1.1rem; font-weight: 600;"></div>
+                            <div id="decisionChoices" style="display: grid; gap: 12px; max-width: 600px; margin: 0 auto;"></div>
+                            <div id="decisionFeedback" style="margin-top: 20px; display: none;"></div>
                         </div>
                     </div>
                 </div>
@@ -2219,7 +2382,10 @@
                 'catchball': 'catchballGame',
                 'feeding': 'feedingGame',
                 'obstacles': 'obstaclesGame',
-                'simon': 'simonGame'
+                'simon': 'simonGame',
+                'couple': 'coupleGame',
+                'budgetchallenge': 'budgetchallengeGame',
+                'decisions': 'decisionsGame'
             };
             
             const gameId = gameMap[gameName];
@@ -2234,11 +2400,14 @@
                 if (gameName === 'feeding') initFeedingGame();
                 if (gameName === 'obstacles') initObstaclesGame();
                 if (gameName === 'simon') initSimonGame();
+                if (gameName === 'couple') initCoupleGame();
+                if (gameName === 'budgetchallenge') initBudgetChallenge();
+                if (gameName === 'decisions') initDecisionsGame();
             }
         }
 
         function hideAllGames() {
-            const games = ['quizGame', 'memoryGame', 'catchballGame', 'feedingGame', 'obstaclesGame', 'simonGame'];
+            const games = ['quizGame', 'memoryGame', 'catchballGame', 'feedingGame', 'obstaclesGame', 'simonGame', 'coupleGame', 'budgetchallengeGame', 'decisionsGame'];
             games.forEach(game => {
                 const elem = document.getElementById(game);
                 if (elem) elem.classList.remove('active');
@@ -2250,6 +2419,7 @@
             if (catchBallInterval) clearInterval(catchBallInterval);
             if (feedingInterval) clearInterval(feedingInterval);
             if (obstaclesInterval) clearInterval(obstaclesInterval);
+            if (decisionTimer) clearInterval(decisionTimer);
         }
 
         // ESC key to close games
@@ -2561,6 +2731,274 @@
                     setTimeout(() => simonNextLevel(), 1000);
                 }
             }
+        }
+
+        // COUPLE COMPATIBILITY GAME
+        const coupleQuestions = [
+            {q: "Qui se lèvera à 7h pour sortir Baggy ?", p1: "Thibaut", p2: "Lucile"},
+            {q: "Qui gérera le budget mensuel de Baggy ?", p1: "Thibaut", p2: "Lucile"},
+            {q: "Qui ira le plus souvent chez le vétérinaire ?", p1: "Thibaut", p2: "Lucile"},
+            {q: "Qui passera le plus de temps à jouer avec Baggy ?", p1: "Thibaut", p2: "Lucile"},
+            {q: "Qui sera le plus strict en éducation ?", p1: "Thibaut", p2: "Lucile"},
+            {q: "Qui donnera le plus de friandises en cachette ?", p1: "Thibaut", p2: "Lucile"},
+            {q: "Qui promènera Baggy sous la pluie ?", p1: "Thibaut", p2: "Lucile"},
+            {q: "Qui nettoiera après les accidents ?", p1: "Thibaut", p2: "Lucile"}
+        ];
+        
+        let coupleAnswers = [];
+        let coupleCurrentQ = 0;
+        
+        function initCoupleGame() {
+            coupleAnswers = [];
+            coupleCurrentQ = 0;
+            displayCoupleQuestion();
+        }
+        
+        function displayCoupleQuestion() {
+            const container = document.getElementById('coupleQuestions');
+            const scoreDiv = document.getElementById('coupleScore');
+            scoreDiv.style.display = 'none';
+            
+            if (coupleCurrentQ < coupleQuestions.length) {
+                const q = coupleQuestions[coupleCurrentQ];
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 30px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 16px; margin: 20px 0;">
+                        <p style="font-size: 1.3rem; font-weight: 700; margin-bottom: 30px;">Question ${coupleCurrentQ + 1}/${coupleQuestions.length}</p>
+                        <p style="font-size: 1.5rem; font-weight: 800; margin-bottom: 40px;">${q.q}</p>
+                        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                            <button class="play-btn" onclick="answerCouple('${q.p1}')" style="font-size: 1.2rem; padding: 20px 40px;">👨 ${q.p1}</button>
+                            <button class="play-btn" onclick="answerCouple('${q.p2}')" style="font-size: 1.2rem; padding: 20px 40px;">👩 ${q.p2}</button>
+                            <button class="play-btn" onclick="answerCouple('Les deux')" style="font-size: 1.2rem; padding: 20px 40px;">👫 Les deux</button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                showCoupleResult();
+            }
+        }
+        
+        function answerCouple(answer) {
+            coupleAnswers.push(answer);
+            coupleCurrentQ++;
+            displayCoupleQuestion();
+        }
+        
+        function showCoupleResult() {
+            const container = document.getElementById('coupleQuestions');
+            const scoreDiv = document.getElementById('coupleScore');
+            
+            const thibautCount = coupleAnswers.filter(a => a === 'Thibaut').length;
+            const lucileCount = coupleAnswers.filter(a => a === 'Lucile').length;
+            const deuxCount = coupleAnswers.filter(a => a === 'Les deux').length;
+            
+            let message = '';
+            if (deuxCount >= 5) {
+                message = '🎉 Parfait ! Vous êtes une équipe équilibrée !';
+            } else if (Math.abs(thibautCount - lucileCount) <= 2) {
+                message = '👍 Bien ! Vous partagez les responsabilités équitablement.';
+            } else {
+                message = '⚠️ Attention ! La charge n\'est pas bien répartie. Discutez-en !';
+            }
+            
+            container.innerHTML = '';
+            scoreDiv.innerHTML = `
+                <div style="padding: 40px; background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-radius: 16px;">
+                    <h3 style="margin-bottom: 20px;">Résultats</h3>
+                    <p style="font-size: 1.2rem; margin: 10px 0;"><strong>Thibaut:</strong> ${thibautCount} tâches</p>
+                    <p style="font-size: 1.2rem; margin: 10px 0;"><strong>Lucile:</strong> ${lucileCount} tâches</p>
+                    <p style="font-size: 1.2rem; margin: 10px 0;"><strong>Ensemble:</strong> ${deuxCount} tâches</p>
+                    <p style="font-size: 1.5rem; font-weight: 800; margin-top: 30px;">${message}</p>
+                    <button class="play-btn" onclick="initCoupleGame()" style="margin-top: 20px;">🔄 Recommencer</button>
+                </div>
+            `;
+            scoreDiv.style.display = 'block';
+        }
+        
+        // BUDGET CHALLENGE GAME
+        const budgetEvents = [
+            {month: 1, event: "Premier mois avec Baggy ! Achats d'équipement", choices: [{text: "Kit complet (300€)", cost: 300, good: true}, {text: "Économique (150€)", cost: 150, good: false}, {text: "Premium (500€)", cost: 500, good: false}]},
+            {month: 2, event: "Baggy tombe malade, consultation vétérinaire", choices: [{text: "Vétérinaire classique (80€)", cost: 80, good: true}, {text: "Urgence (200€)", cost: 200, good: false}, {text: "Attendre (0€)", cost: 0, good: false}]},
+            {month: 3, event: "Cours d'éducation canine", choices: [{text: "10 séances (250€)", cost: 250, good: true}, {text: "5 séances (150€)", cost: 150, good: false}, {text: "Pas de cours (0€)", cost: 0, good: false}]},
+            {month: 4, event: "Baggy a détruit le canapé !", choices: [{text: "Réparer (200€)", cost: 200, good: true}, {text: "Remplacer (800€)", cost: 800, good: false}, {text: "Laisser (0€)", cost: 0, good: false}]},
+            {month: 5, event: "Vacances : que faire avec Baggy ?", choices: [{text: "Pension (300€)", cost: 300, good: true}, {text: "L'emmener (100€)", cost: 100, good: true}, {text: "Ami (gratuit)", cost: 0, good: true}]},
+            {month: 6, event: "Bilan : assurance + contrôle vétérinaire", choices: [{text: "Tout faire (250€)", cost: 250, good: true}, {text: "Minimal (100€)", cost: 100, good: false}, {text: "Reporter (0€)", cost: 0, good: false}]}
+        ];
+        
+        let budgetCurrent = 0;
+        let budgetRemaining = 2500;
+        let budgetGoodChoices = 0;
+        
+        function initBudgetChallenge() {
+            budgetCurrent = 0;
+            budgetRemaining = 2500;
+            budgetGoodChoices = 0;
+            document.getElementById('budgetResult').style.display = 'none';
+            displayBudgetEvent();
+        }
+        
+        function displayBudgetEvent() {
+            if (budgetCurrent >= budgetEvents.length) {
+                showBudgetResult();
+                return;
+            }
+            
+            const event = budgetEvents[budgetCurrent];
+            document.getElementById('budgetMonth').textContent = event.month;
+            document.getElementById('budgetRemaining').textContent = budgetRemaining;
+            document.getElementById('budgetBar').style.width = (budgetRemaining / 2500 * 100) + '%';
+            
+            document.getElementById('budgetEvent').innerHTML = `
+                <div style="font-size: 1.2rem; font-weight: 700; margin-bottom: 20px;">Mois ${event.month}</div>
+                <div style="font-size: 1.1rem;">${event.event}</div>
+            `;
+            
+            const choicesHtml = event.choices.map((choice, idx) => 
+                `<button class="play-btn" onclick="chooseBudget(${idx})">${choice.text}</button>`
+            ).join('');
+            document.getElementById('budgetChoices').innerHTML = choicesHtml;
+        }
+        
+        function chooseBudget(choiceIdx) {
+            const event = budgetEvents[budgetCurrent];
+            const choice = event.choices[choiceIdx];
+            
+            budgetRemaining -= choice.cost;
+            if (choice.good) budgetGoodChoices++;
+            
+            budgetCurrent++;
+            
+            if (budgetRemaining < 0) {
+                showBudgetResult(true);
+            } else {
+                displayBudgetEvent();
+            }
+        }
+        
+        function showBudgetResult(failed = false) {
+            document.getElementById('budgetEvent').style.display = 'none';
+            document.getElementById('budgetChoices').style.display = 'none';
+            
+            const resultDiv = document.getElementById('budgetResult');
+            let message = '';
+            
+            if (failed) {
+                message = '💸 Dépassement de budget ! Vous n\'avez pas su gérer vos finances.';
+            } else if (budgetGoodChoices >= 5) {
+                message = `🎉 Bravo ! ${budgetRemaining}€ restants. Vous êtes excellents gestionnaires !`;
+            } else if (budgetGoodChoices >= 3) {
+                message = `👍 Pas mal ! ${budgetRemaining}€ restants. Vous pouvez faire mieux.`;
+            } else {
+                message = `⚠️ ${budgetRemaining}€ restants mais mauvais choix. Réfléchissez mieux !`;
+            }
+            
+            resultDiv.innerHTML = `
+                <div style="padding: 30px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 16px;">
+                    <p style="font-size: 1.5rem; font-weight: 800;">${message}</p>
+                    <p style="margin-top: 20px;">Bonnes décisions : ${budgetGoodChoices}/6</p>
+                    <button class="play-btn" onclick="initBudgetChallenge(); document.getElementById('budgetEvent').style.display='block'; document.getElementById('budgetChoices').style.display='flex';" style="margin-top: 20px;">🔄 Recommencer</button>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+        
+        // QUICK DECISIONS GAME
+        const decisionSituations = [
+            {situation: "Baggy refuse de manger depuis 24h. Que faites-vous ?", choices: ["Attendre encore", "Appeler le vétérinaire", "Changer de nourriture", "Forcer à manger"], correct: 1},
+            {situation: "Baggy grogne sur un enfant au parc. Réaction ?", choices: ["Continuer à jouer", "S'excuser et partir", "Gronder Baggy fort", "Éloigner doucement"], correct: 3},
+            {situation: "Baggy tire en laisse vers un autre chien", choices: ["Lâcher la laisse", "Tirer fort en arrière", "S'arrêter et attendre", "Continuer normalement"], correct: 2},
+            {situation: "Baggy a mangé du chocolat il y a 10min", choices: ["Attendre de voir", "Urgence vétérinaire", "Le faire vomir", "Donner de l'eau"], correct: 1},
+            {situation: "Baggy pleure la nuit, première semaine", choices: ["Ignorer complètement", "Le prendre dans le lit", "Rassurer puis partir", "Laisser pleurer"], correct: 2}
+        ];
+        
+        let decisionCurrent = 0;
+        let decisionScore = 0;
+        let decisionTimer = null;
+        let decisionTimeLeft = 10;
+        
+        function initDecisionsGame() {
+            decisionCurrent = 0;
+            decisionScore = 0;
+            document.getElementById('decisionScore').textContent = '0';
+            document.getElementById('decisionFeedback').style.display = 'none';
+            displayDecisionSituation();
+        }
+        
+        function displayDecisionSituation() {
+            if (decisionCurrent >= decisionSituations.length) {
+                showDecisionResult();
+                return;
+            }
+            
+            const situation = decisionSituations[decisionCurrent];
+            decisionTimeLeft = 10;
+            document.getElementById('decisionTimer').textContent = decisionTimeLeft;
+            document.getElementById('decisionSituation').textContent = situation.situation;
+            
+            const choicesHtml = situation.choices.map((choice, idx) => 
+                `<button class="answer-btn" onclick="chooseDecision(${idx})">${choice}</button>`
+            ).join('');
+            document.getElementById('decisionChoices').innerHTML = choicesHtml;
+            
+            if (decisionTimer) clearInterval(decisionTimer);
+            decisionTimer = setInterval(() => {
+                decisionTimeLeft--;
+                document.getElementById('decisionTimer').textContent = decisionTimeLeft;
+                if (decisionTimeLeft <= 0) {
+                    clearInterval(decisionTimer);
+                    chooseDecision(-1);
+                }
+            }, 1000);
+        }
+        
+        function chooseDecision(choiceIdx) {
+            if (decisionTimer) clearInterval(decisionTimer);
+            
+            const situation = decisionSituations[decisionCurrent];
+            const buttons = document.querySelectorAll('#decisionChoices .answer-btn');
+            
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === situation.correct) {
+                    btn.classList.add('correct');
+                } else if (idx === choiceIdx) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            if (choiceIdx === situation.correct) {
+                decisionScore++;
+                document.getElementById('decisionScore').textContent = decisionScore;
+            }
+            
+            setTimeout(() => {
+                decisionCurrent++;
+                displayDecisionSituation();
+            }, 2000);
+        }
+        
+        function showDecisionResult() {
+            document.getElementById('decisionSituation').textContent = '';
+            document.getElementById('decisionChoices').innerHTML = '';
+            
+            const feedback = document.getElementById('decisionFeedback');
+            let message = '';
+            
+            if (decisionScore === 5) {
+                message = '🏆 Parfait ! Vous réagissez excellemment en situation d\'urgence !';
+            } else if (decisionScore >= 3) {
+                message = '👍 Bien ! Vous avez les bons réflexes de base.';
+            } else {
+                message = '📚 Révisez vos connaissances ! C\'est important pour Baggy.';
+            }
+            
+            feedback.innerHTML = `
+                <div style="padding: 30px; background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border-radius: 16px;">
+                    <p style="font-size: 1.5rem; font-weight: 800;">${message}</p>
+                    <p style="margin-top: 20px; font-size: 1.2rem;">Score: ${decisionScore}/5</p>
+                    <button class="play-btn" onclick="initDecisionsGame()" style="margin-top: 20px;">🔄 Recommencer</button>
+                </div>
+            `;
+            feedback.style.display = 'block';
         }
 
         // INITIALIZE ON LOAD
