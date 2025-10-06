@@ -1808,6 +1808,15 @@
                             <button class="play-btn">🎮 Jouer à 2</button>
                         </div>
                     </div>
+                    
+                    <div class="minigame-card" onclick="showGame('sacrifice')" style="border: 3px solid #FF6B9D; background: linear-gradient(135deg, rgba(255,238,248,0.95) 0%, rgba(255,255,255,0.95) 100%);">
+                        <div class="minigame-icon">❤️</div>
+                        <div class="minigame-title">Êtes-vous Vraiment Prêts ?</div>
+                        <div class="minigame-desc">15 questions sur l'engagement d'adopter un être vivant 🐕</div>
+                        <div class="minigame-play">
+                            <button class="play-btn" style="background: var(--gradient-2);">💕 Test Important</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- QUIZ GAME -->
@@ -1967,6 +1976,19 @@
                             <div id="decisionChoices" style="display: grid; gap: 12px; max-width: 600px; margin: 0 auto;"></div>
                             <div id="decisionFeedback" style="margin-top: 20px; display: none;"></div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- SACRIFICE/READINESS GAME -->
+                <div id="sacrificeGame" class="game-container">
+                    <div class="game-inner" style="max-width: 1000px;">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header" style="background: linear-gradient(135deg, #ffeef8 0%, #e0f2fe 100%); padding: 30px; border-radius: 16px; margin-bottom: 30px;">
+                            <h3 style="font-size: 2.2rem; margin-bottom: 15px;">❤️ Êtes-vous Vraiment Prêts ?</h3>
+                            <p style="font-size: 1.1rem; line-height: 1.6;">Un chien est un être vivant qui vous aimera inconditionnellement pendant 12-14 ans.<br>Cela implique de vrais sacrifices et un engagement total.<br><strong>Répondez honnêtement. C'est important. 🐕</strong></p>
+                        </div>
+                        <div id="sacrificeQuestions"></div>
+                        <div id="sacrificeResult" style="display: none;"></div>
                     </div>
                 </div>
             </div>
@@ -2385,7 +2407,8 @@
                 'simon': 'simonGame',
                 'couple': 'coupleGame',
                 'budgetchallenge': 'budgetchallengeGame',
-                'decisions': 'decisionsGame'
+                'decisions': 'decisionsGame',
+                'sacrifice': 'sacrificeGame'
             };
             
             const gameId = gameMap[gameName];
@@ -2403,11 +2426,12 @@
                 if (gameName === 'couple') initCoupleGame();
                 if (gameName === 'budgetchallenge') initBudgetChallenge();
                 if (gameName === 'decisions') initDecisionsGame();
+                if (gameName === 'sacrifice') initSacrificeGame();
             }
         }
 
         function hideAllGames() {
-            const games = ['quizGame', 'memoryGame', 'catchballGame', 'feedingGame', 'obstaclesGame', 'simonGame', 'coupleGame', 'budgetchallengeGame', 'decisionsGame'];
+            const games = ['quizGame', 'memoryGame', 'catchballGame', 'feedingGame', 'obstaclesGame', 'simonGame', 'coupleGame', 'budgetchallengeGame', 'decisionsGame', 'sacrificeGame'];
             games.forEach(game => {
                 const elem = document.getElementById(game);
                 if (elem) elem.classList.remove('active');
@@ -2999,6 +3023,256 @@
                 </div>
             `;
             feedback.style.display = 'block';
+        }
+
+        // SACRIFICE/READINESS GAME - 15 DEEP QUESTIONS
+        const sacrificeQuestions = [
+            {
+                q: "💰 Êtes-vous prêts à dépenser 200-400€ par mois pendant 12-14 ans pour Baggy (nourriture, véto, imprévus) ?",
+                category: "Engagement financier",
+                weight: 2
+            },
+            {
+                q: "⏰ Êtes-vous prêts à sortir Baggy 3-4 fois par jour, TOUS LES JOURS, même quand il pleut, même quand vous êtes fatigués ?",
+                category: "Engagement quotidien",
+                weight: 3
+            },
+            {
+                q: "🏖️ Êtes-vous prêts à renoncer à certaines vacances spontanées ou à payer une pension (300-500€/semaine) ?",
+                category: "Liberté personnelle",
+                weight: 2
+            },
+            {
+                q: "🌙 Êtes-vous prêts à être réveillés la nuit pendant les premières semaines par un chiot qui pleure ?",
+                category: "Sacrifices immédiats",
+                weight: 1
+            },
+            {
+                q: "🏥 Si Baggy tombe gravement malade et que les soins coûtent 3000€, êtes-vous prêts à tout faire pour lui ?",
+                category: "Engagement inconditionnel",
+                weight: 3
+            },
+            {
+                q: "👥 Êtes-vous prêts à ce que votre vie sociale change ? Plus de sorties longues improvisées, devoir rentrer pour Baggy ?",
+                category: "Vie sociale",
+                weight: 2
+            },
+            {
+                q: "🧹 Êtes-vous prêts à nettoyer des accidents, du vomi, et à gérer les périodes de mue (poils partout) ?",
+                category: "Réalités du quotidien",
+                weight: 1
+            },
+            {
+                q: "👴 Êtes-vous prêts à vous occuper de Baggy quand il sera vieux, incontinent, et aura besoin de soins constants ?",
+                category: "Engagement long terme",
+                weight: 3
+            },
+            {
+                q: "💼 Si votre carrière exige que vous déménagiez, êtes-vous prêts à chercher un logement qui accepte Baggy, même si c'est plus cher ?",
+                category: "Priorités de vie",
+                weight: 2
+            },
+            {
+                q: "😢 Êtes-vous prêts émotionnellement à perdre Baggy dans 12-14 ans ? C'est l'un des moments les plus douloureux de la vie.",
+                category: "Réalité émotionnelle",
+                weight: 2
+            },
+            {
+                q: "🎓 Êtes-vous prêts à investir du temps dans l'éducation de Baggy pendant au moins 6 mois (cours, cohérence, patience) ?",
+                category: "Éducation",
+                weight: 2
+            },
+            {
+                q: "🏃 Êtes-vous prêts à adapter votre routine sportive/loisirs pour inclure Baggy ou organiser sa garde ?",
+                category: "Style de vie",
+                weight: 1
+            },
+            {
+                q: "💕 Comprenez-vous que Baggy vous aimera inconditionnellement et dépendra 100% de vous pour son bonheur ?",
+                category: "Responsabilité émotionnelle",
+                weight: 3
+            },
+            {
+                q: "🚫 Êtes-vous prêts à dire NON à des opportunités (weekend, job, voyages) si elles ne sont pas compatibles avec Baggy ?",
+                category: "Sacrifices personnels",
+                weight: 2
+            },
+            {
+                q: "❤️ Êtes-vous prêts à aimer Baggy comme un membre de votre famille, à lui donner le meilleur de vous-mêmes chaque jour ?",
+                category: "Amour inconditionnel",
+                weight: 3
+            }
+        ];
+
+        let sacrificeAnswers = [];
+        let sacrificeCurrentQ = 0;
+        
+        function initSacrificeGame() {
+            sacrificeAnswers = [];
+            sacrificeCurrentQ = 0;
+            document.getElementById('sacrificeResult').style.display = 'none';
+            displaySacrificeQuestion();
+        }
+        
+        function displaySacrificeQuestion() {
+            const container = document.getElementById('sacrificeQuestions');
+            
+            if (sacrificeCurrentQ < sacrificeQuestions.length) {
+                const q = sacrificeQuestions[sacrificeCurrentQ];
+                const progress = ((sacrificeCurrentQ / sacrificeQuestions.length) * 100).toFixed(0);
+                
+                container.innerHTML = `
+                    <div style="margin-bottom: 30px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="font-weight: 700; color: var(--text-light);">Question ${sacrificeCurrentQ + 1}/15</span>
+                            <span style="font-weight: 700; color: var(--primary);">${q.category}</span>
+                        </div>
+                        <div style="background: var(--border); height: 8px; border-radius: 8px; overflow: hidden;">
+                            <div style="width: ${progress}%; height: 100%; background: var(--gradient-2); transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #ffffff 0%, #ffeef8 100%); padding: 40px; border-radius: 20px; margin: 20px 0; border: 3px solid #FF6B9D; box-shadow: var(--shadow-lg);">
+                        <p style="font-size: 1.4rem; font-weight: 700; line-height: 1.8; text-align: center; color: var(--text); margin-bottom: 40px;">${q.q}</p>
+                        
+                        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                            <button class="play-btn" onclick="answerSacrifice(5)" style="font-size: 1.1rem; padding: 20px 30px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); min-width: 200px;">
+                                <div style="font-size: 1.5rem; margin-bottom: 5px;">✅</div>
+                                <div>Oui, totalement</div>
+                            </button>
+                            <button class="play-btn" onclick="answerSacrifice(3)" style="font-size: 1.1rem; padding: 20px 30px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); min-width: 200px;">
+                                <div style="font-size: 1.5rem; margin-bottom: 5px;">🤔</div>
+                                <div>Oui, mais...</div>
+                            </button>
+                            <button class="play-btn" onclick="answerSacrifice(0)" style="font-size: 1.1rem; padding: 20px 30px; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); min-width: 200px;">
+                                <div style="font-size: 1.5rem; margin-bottom: 5px;">❌</div>
+                                <div>Non / Pas sûr</div>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <p style="text-align: center; color: var(--text-light); font-style: italic; margin-top: 20px;">
+                        Prenez le temps de réfléchir. Soyez honnêtes avec vous-mêmes. 💭
+                    </p>
+                `;
+            } else {
+                showSacrificeResult();
+            }
+        }
+        
+        function answerSacrifice(score) {
+            const question = sacrificeQuestions[sacrificeCurrentQ];
+            sacrificeAnswers.push({
+                score: score,
+                weight: question.weight,
+                category: question.category
+            });
+            sacrificeCurrentQ++;
+            displaySacrificeQuestion();
+        }
+        
+        function showSacrificeResult() {
+            const container = document.getElementById('sacrificeQuestions');
+            const resultDiv = document.getElementById('sacrificeResult');
+            
+            // Calculate weighted score
+            let totalWeightedScore = 0;
+            let maxWeightedScore = 0;
+            
+            sacrificeAnswers.forEach(answer => {
+                totalWeightedScore += answer.score * answer.weight;
+                maxWeightedScore += 5 * answer.weight;
+            });
+            
+            const percentage = Math.round((totalWeightedScore / maxWeightedScore) * 100);
+            
+            // Count responses by type
+            const yesCount = sacrificeAnswers.filter(a => a.score === 5).length;
+            const maybeCount = sacrificeAnswers.filter(a => a.score === 3).length;
+            const noCount = sacrificeAnswers.filter(a => a.score === 0).length;
+            
+            // Determine readiness level and message
+            let level = '';
+            let emoji = '';
+            let message = '';
+            let advice = '';
+            let bgColor = '';
+            
+            if (percentage >= 90) {
+                level = 'VOUS ÊTES PRÊTS ! 🎉';
+                emoji = '❤️';
+                bgColor = 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)';
+                message = 'Thibaut et Lucile, vous avez conscience de ce qu\'implique adopter un être vivant. Votre engagement est solide et vous êtes prêts à donner à Baggy l\'amour et les sacrifices nécessaires.';
+                advice = '<strong>Conseil:</strong> Vous êtes sur la bonne voie ! Continuez à vous préparer concrètement (budget, équipement, école du chiot). Baggy aura de la chance de vous avoir. 🐕💕';
+            } else if (percentage >= 70) {
+                level = 'PRESQUE PRÊTS 👍';
+                emoji = '💛';
+                bgColor = 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)';
+                message = 'Vous êtes sur la bonne voie, mais il y a encore quelques points à réfléchir. Adopter un chien demande d\'être prêt à 100%, pas à 70%.';
+                advice = '<strong>Conseil:</strong> Discutez ensemble des questions où vous avez hésité. Assurez-vous d\'être alignés sur les sacrifices nécessaires. Prenez le temps qu\'il faut. ⏰';
+            } else if (percentage >= 50) {
+                level = 'RÉFLEXION NÉCESSAIRE 🤔';
+                emoji = '🧡';
+                bgColor = 'linear-gradient(135deg, #fed7aa 0%, #fbbf24 100%)';
+                message = 'Vous avez encore des doutes importants. C\'est normal et c\'est bien d\'être honnêtes. Adopter un chien n\'est peut-être pas le bon moment maintenant.';
+                advice = '<strong>Conseil:</strong> Ne vous précipitez pas. Prenez 3-6 mois pour vraiment vous préparer. Visitez des amis qui ont des chiens, faites du dog-sitting. L\'engagement doit être total. 🕐';
+            } else {
+                level = 'PAS ENCORE PRÊTS ⚠️';
+                emoji = '💔';
+                bgColor = 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)';
+                message = 'Vos réponses montrent que vous n\'êtes pas encore prêts pour un tel engagement. Ce n\'est PAS un échec, c\'est de la lucidité et du respect pour l\'animal.';
+                advice = '<strong>Conseil:</strong> Attendez. Un chien mérite des maîtres à 100% engagés. Peut-être dans 1-2 ans, quand votre situation sera plus stable. Baggy peut attendre. ❤️';
+            }
+            
+            container.innerHTML = '';
+            resultDiv.innerHTML = `
+                <div style="padding: 50px 30px; background: ${bgColor}; border-radius: 24px; box-shadow: var(--shadow-pop); border: 4px solid var(--primary);">
+                    <div style="text-align: center; font-size: 5rem; margin-bottom: 20px;">${emoji}</div>
+                    <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px; color: var(--text);">${level}</h2>
+                    
+                    <div style="background: rgba(255,255,255,0.7); padding: 30px; border-radius: 16px; margin: 30px 0;">
+                        <div style="font-size: 4rem; font-weight: 900; text-align: center; margin-bottom: 10px; background: var(--gradient-2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${percentage}%</div>
+                        <p style="text-align: center; font-weight: 700; color: var(--text-light);">Score de préparation</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 30px 0;">
+                        <div style="background: rgba(255,255,255,0.7); padding: 20px; border-radius: 12px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">✅</div>
+                            <div style="font-size: 1.8rem; font-weight: 800;">${yesCount}</div>
+                            <div style="font-size: 0.9rem; color: var(--text-light);">Oui totalement</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.7); padding: 20px; border-radius: 12px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">🤔</div>
+                            <div style="font-size: 1.8rem; font-weight: 800;">${maybeCount}</div>
+                            <div style="font-size: 0.9rem; color: var(--text-light);">Oui mais...</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.7); padding: 20px; border-radius: 12px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">❌</div>
+                            <div style="font-size: 1.8rem; font-weight: 800;">${noCount}</div>
+                            <div style="font-size: 0.9rem; color: var(--text-light);">Non / Pas sûr</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.9); padding: 25px; border-radius: 16px; margin: 30px 0; border-left: 5px solid var(--primary);">
+                        <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px;">${message}</p>
+                        <p style="font-size: 1.1rem; line-height: 1.8;">${advice}</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #ffeef8 0%, #e0f2fe 100%); padding: 25px; border-radius: 16px; margin-top: 30px;">
+                        <p style="text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 15px;">💭 Rappelez-vous</p>
+                        <p style="text-align: center; font-size: 1rem; line-height: 1.8; font-style: italic;">
+                            "Un chien n'est pas un jouet, c'est un être vivant qui vous aimera inconditionnellement.<br>
+                            Il mérite des maîtres prêts à lui donner le meilleur, chaque jour, pendant 12-14 ans.<br>
+                            C'est le plus beau des engagements, mais aussi le plus sérieux." ❤️🐕
+                        </p>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="play-btn" onclick="initSacrificeGame()" style="font-size: 1.1rem; padding: 15px 40px;">🔄 Refaire le test</button>
+                    </div>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
         }
 
         // INITIALIZE ON LOAD
