@@ -346,77 +346,6 @@
             font-weight: 500;
         }
 
-        /* Audio Player Styles */
-        .music-controls {
-            margin-top: 24px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
-
-        .music-controls.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .music-player {
-            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
-            border-radius: 16px;
-            padding: 16px;
-            display: inline-block;
-            box-shadow: var(--shadow-md);
-            border: 2px solid var(--border);
-        }
-
-        .music-info {
-            font-size: 0.875rem;
-            color: var(--text-light);
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .music-volume {
-            width: 200px;
-            margin: 0 auto;
-        }
-
-        .music-volume input[type="range"] {
-            width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: var(--border);
-            outline: none;
-            cursor: pointer;
-        }
-
-        .music-volume input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--gradient-2);
-            cursor: pointer;
-        }
-
-        .music-toggle {
-            margin-top: 12px;
-            background: var(--gradient-2);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-weight: 700;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .music-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
         /* STATS GRID */
         .stats-grid {
             display: grid;
@@ -1192,20 +1121,6 @@
                 </div>
                 
                 <div class="message" id="dogMessage">Clique et garde ton doigt appuyé ! 🐾</div>
-                
-                <!-- New Music Controls Section -->
-                <div class="music-controls" id="musicControls">
-                    <div class="music-player">
-                        <div class="music-info">
-                            🎵 Musique de Baggy - "Who Let The Dogs Out"
-                        </div>
-                        <div class="music-volume">
-                            <label style="font-size: 0.813rem; color: var(--text-light); margin-right: 8px;">Volume:</label>
-                            <input type="range" id="volumeSlider" min="0" max="100" value="30">
-                        </div>
-                        <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">⏸️ Pause</button>
-                    </div>
-                </div>
             </div>
 
             <div class="card">
@@ -1342,44 +1257,20 @@
     </div>
 
     <script>
-        // MUSIC SETUP - Using local MP3 file from GitHub
+        // MUSIC SETUP - SIMPLIFIED VERSION
         const backgroundMusic = new Audio('https://raw.githubusercontent.com/ThibautMelen/baggy-staffie-guide/main/assets/music.mp3');
         backgroundMusic.loop = true;
-        backgroundMusic.volume = 0.3;
+        backgroundMusic.volume = 0.5; // Volume fixe à 50%
         
         // Variables
         const dogEmoji = document.getElementById('interactiveDog');
         const dogContainer = document.getElementById('dogContainer');
         const dogMessage = document.getElementById('dogMessage');
-        const musicControls = document.getElementById('musicControls');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const musicToggle = document.getElementById('musicToggle');
         
-        let caressingTimer = null;
         let isCaressing = false;
-        let hasPlayedMusic = false;
         let sparkleInterval = null;
-        let isMusicPlaying = false;
         
         const sparkleEmojis = ['✨', '💕', '🐾', '💖', '⭐', '💫', '🌟', '🐕', '❤️', '😍'];
-
-        // Volume control
-        volumeSlider.addEventListener('input', (e) => {
-            backgroundMusic.volume = e.target.value / 100;
-        });
-
-        // Toggle music play/pause
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                backgroundMusic.pause();
-                musicToggle.textContent = '▶️ Play';
-                isMusicPlaying = false;
-            } else {
-                backgroundMusic.play();
-                musicToggle.textContent = '⏸️ Pause';
-                isMusicPlaying = true;
-            }
-        }
 
         function createSparkle(x, y) {
             const sparkle = document.createElement('div');
@@ -1396,41 +1287,26 @@
             setTimeout(() => sparkle.remove(), 1500);
         }
 
-        function playWouafSound() {
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(80, audioContext.currentTime + 0.2);
-                oscillator.type = 'sawtooth';
-                gainNode.gain.setValueAtTime(0.25, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.2);
-            } catch (e) {
-                console.log('Audio not supported');
-            }
-        }
-
-        function showMusicPlayer() {
-            // Start playing the local music file
-            backgroundMusic.play().then(() => {
-                isMusicPlaying = true;
-                musicToggle.textContent = '⏸️ Pause';
-                console.log('Music started playing');
-            }).catch(e => {
-                console.log('Failed to autoplay music:', e);
-                dogMessage.innerHTML = "🎵 Clique sur Play pour la musique ! 💕";
+        function startCaressing(event) {
+            event.preventDefault();
+            isCaressing = true;
+            
+            // Démarre la musique IMMÉDIATEMENT
+            backgroundMusic.play().catch(e => {
+                console.log('Music playback failed:', e);
             });
             
-            musicControls.classList.add('active');
-            dogMessage.textContent = "🎵 Baggy adore cette musique ! Continue de me caresser ! 💕";
+            dogEmoji.classList.add('caressing');
             
+            const rect = dogEmoji.getBoundingClientRect();
+            const x = event.clientX || (event.touches && event.touches[0].clientX) || rect.left + rect.width/2;
+            const y = event.clientY || (event.touches && event.touches[0].clientY) || rect.top + rect.height/2;
+            
+            createSparkle(x, y);
+            
+            dogMessage.textContent = "🎵 Baggy adore cette musique ! 💕";
+            
+            // Sparkles pendant la caresse
             sparkleInterval = setInterval(() => {
                 if (isCaressing) {
                     const rect = dogEmoji.getBoundingClientRect();
@@ -1442,76 +1318,31 @@
             }, 200);
         }
 
-        function hideMusicPlayer() {
+        function stopCaressing() {
+            isCaressing = false;
+            
+            // Arrête la musique IMMÉDIATEMENT
             backgroundMusic.pause();
-            isMusicPlaying = false;
-            musicToggle.textContent = '▶️ Play';
-            musicControls.classList.remove('active');
+            backgroundMusic.currentTime = 0; // Remet au début pour la prochaine fois
+            
+            dogEmoji.classList.remove('caressing');
+            
             if (sparkleInterval) {
                 clearInterval(sparkleInterval);
                 sparkleInterval = null;
             }
+            
+            dogMessage.textContent = "Clique et garde ton doigt appuyé ! 🐾";
         }
 
-        function startCaressing(event) {
-            event.preventDefault();
-            isCaressing = true;
-            
-            dogEmoji.classList.add('caressing');
-            
-            const rect = dogEmoji.getBoundingClientRect();
-            const x = event.clientX || (event.touches && event.touches[0].clientX) || rect.left + rect.width/2;
-            const y = event.clientY || (event.touches && event.touches[0].clientY) || rect.top + rect.height/2;
-            
-            createSparkle(x, y);
-            playWouafSound();
-            
-            dogMessage.textContent = "Continue à me caresser... 🐾💕";
-            
-            if (!hasPlayedMusic) {
-                caressingTimer = setTimeout(() => {
-                    if (isCaressing) {
-                        showMusicPlayer();
-                        hasPlayedMusic = true;
-                        
-                        for (let i = 0; i < 20; i++) {
-                            setTimeout(() => {
-                                const rect = dogEmoji.getBoundingClientRect();
-                                createSparkle(
-                                    rect.left + Math.random() * rect.width,
-                                    rect.top + Math.random() * rect.height
-                                );
-                            }, i * 100);
-                        }
-                    }
-                }, 2000);
-            }
-        }
-
-        function stopCaressing() {
-            isCaressing = false;
-            dogEmoji.classList.remove('caressing');
-            
-            if (caressingTimer && !hasPlayedMusic) {
-                clearTimeout(caressingTimer);
-                dogMessage.textContent = "Continue un peu plus longtemps ! 🐾";
-            }
-            
-            if (!hasPlayedMusic && !isCaressing) {
-                setTimeout(() => {
-                    if (!isCaressing) {
-                        dogMessage.textContent = "Clique et garde ton doigt appuyé ! 🐾";
-                    }
-                }, 1000);
-            }
-        }
-
+        // Event listeners pour souris et tactile
         dogEmoji.addEventListener('mousedown', startCaressing);
         dogEmoji.addEventListener('touchstart', startCaressing, { passive: false });
         
         document.addEventListener('mouseup', stopCaressing);
         document.addEventListener('touchend', stopCaressing);
         
+        // Sparkles en mouvement
         dogEmoji.addEventListener('mousemove', (e) => {
             if (isCaressing) createSparkle(e.clientX, e.clientY);
         });
