@@ -993,16 +993,74 @@
         }
 
         .game-container {
-            background: var(--surface);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 24px;
-            border: 2px solid var(--border);
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
         }
 
         .game-container.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-inner {
+            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%);
+            margin: auto;
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 900px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .game-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gradient-2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .game-close:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: var(--shadow-pop);
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--border);
+        }
+
+        .game-header h3 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .memory-grid {
@@ -1645,82 +1703,107 @@
 
                 <!-- QUIZ GAME -->
                 <div id="quizGame" class="game-container">
-                    <h3>🧠 Quiz Staffie</h3>
-                    <div id="quizContainer"></div>
-                    <div id="quizResult" class="quiz-result" style="display:none;"></div>
-                    <button class="play-btn" onclick="hideAllGames()" style="margin-top: 20px;">← Retour aux jeux</button>
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>🧠 Quiz Staffie</h3>
+                            <p>Testez vos connaissances sur les Staffordshire Bull Terriers</p>
+                        </div>
+                        <div id="quizContainer"></div>
+                        <div id="quizResult" class="quiz-result" style="display:none;"></div>
+                    </div>
                 </div>
 
                 <!-- MEMORY GAME -->
                 <div id="memoryGame" class="game-container">
-                    <h3>🃏 Memory Baggy</h3>
-                    <p style="text-align: center; margin: 16px 0;">Trouve toutes les paires ! Clique sur les cartes pour les retourner.</p>
-                    <div id="memoryGrid" class="memory-grid"></div>
-                    <div style="text-align: center; margin-top: 20px;">
-                        <p><strong>Tentatives:</strong> <span id="moves">0</span></p>
-                        <button class="play-btn" onclick="initMemoryGame()">🔄 Nouvelle Partie</button>
-                        <button class="play-btn" onclick="hideAllGames()">← Retour aux jeux</button>
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>🃏 Memory Baggy</h3>
+                            <p>Trouve toutes les paires ! Clique sur les cartes pour les retourner.</p>
+                        </div>
+                        <div id="memoryGrid" class="memory-grid"></div>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <p><strong>Tentatives:</strong> <span id="moves">0</span></p>
+                            <button class="play-btn" onclick="initMemoryGame()">🔄 Nouvelle Partie</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- CATCH BALL GAME -->
                 <div id="catchballGame" class="game-container">
-                    <h3>🎾 Attrape la Balle</h3>
-                    <p style="text-align: center; margin: 16px 0;">Déplace Baggy avec les flèches ← → pour attraper les balles !</p>
-                    <canvas id="catchballCanvas" width="400" height="500" style="border: 2px solid var(--border); border-radius: 12px; display: block; margin: 0 auto; background: linear-gradient(to bottom, #87CEEB, #98D8C8);"></canvas>
-                    <div style="text-align: center; margin-top: 20px;">
-                        <p><strong>Score:</strong> <span id="catchballScore">0</span> | <strong>Vies:</strong> <span id="catchballLives">3</span></p>
-                        <button class="play-btn" onclick="initCatchBallGame()">🔄 Nouvelle Partie</button>
-                        <button class="play-btn" onclick="hideAllGames()">← Retour aux jeux</button>
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>🎾 Attrape la Balle</h3>
+                            <p>Déplace Baggy avec les flèches ← → pour attraper les balles !</p>
+                        </div>
+                        <canvas id="catchballCanvas" width="400" height="500" style="border: 2px solid var(--border); border-radius: 12px; display: block; margin: 0 auto; background: linear-gradient(to bottom, #87CEEB, #98D8C8);"></canvas>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <p><strong>Score:</strong> <span id="catchballScore">0</span> | <strong>Vies:</strong> <span id="catchballLives">3</span></p>
+                            <button class="play-btn" onclick="initCatchBallGame()">🔄 Nouvelle Partie</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- FEEDING GAME -->
                 <div id="feedingGame" class="game-container">
-                    <h3>🍖 Nourris Baggy</h3>
-                    <p style="text-align: center; margin: 16px 0;">Clique sur les os pour nourrir Baggy ! Atteins 100% avant la fin du temps !</p>
-                    <div style="text-align: center;">
-                        <div style="font-size: 120px; margin: 20px 0;" id="baggyhungry">🐕</div>
-                        <div style="background: var(--border); height: 30px; border-radius: 15px; overflow: hidden; max-width: 400px; margin: 20px auto;">
-                            <div id="hungerBar" style="width: 0%; height: 100%; background: var(--gradient-4); transition: width 0.3s;"></div>
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>🍖 Nourris Baggy</h3>
+                            <p>Clique sur les os pour nourrir Baggy ! Atteins 100% avant la fin du temps !</p>
                         </div>
-                        <p><strong>Faim:</strong> <span id="hungerLevel">0</span>% | <strong>Temps:</strong> <span id="feedingTime">60</span>s</p>
-                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 20px 0;">
-                            <button class="play-btn" onclick="feedBaggy(5)" style="font-size: 40px;">🦴</button>
-                            <button class="play-btn" onclick="feedBaggy(10)" style="font-size: 40px;">🍖</button>
-                            <button class="play-btn" onclick="feedBaggy(15)" style="font-size: 40px;">🥩</button>
+                        <div style="text-align: center;">
+                            <div style="font-size: 120px; margin: 20px 0;" id="baggyhungry">🐕</div>
+                            <div style="background: var(--border); height: 30px; border-radius: 15px; overflow: hidden; max-width: 400px; margin: 20px auto;">
+                                <div id="hungerBar" style="width: 0%; height: 100%; background: var(--gradient-4); transition: width 0.3s;"></div>
+                            </div>
+                            <p><strong>Faim:</strong> <span id="hungerLevel">0</span>% | <strong>Temps:</strong> <span id="feedingTime">60</span>s</p>
+                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 20px 0;">
+                                <button class="play-btn" onclick="feedBaggy(5)" style="font-size: 40px;">🦴</button>
+                                <button class="play-btn" onclick="feedBaggy(10)" style="font-size: 40px;">🍖</button>
+                                <button class="play-btn" onclick="feedBaggy(15)" style="font-size: 40px;">🥩</button>
+                            </div>
+                            <button class="play-btn" onclick="initFeedingGame()">🔄 Nouvelle Partie</button>
                         </div>
-                        <button class="play-btn" onclick="initFeedingGame()">🔄 Nouvelle Partie</button>
-                        <button class="play-btn" onclick="hideAllGames()">← Retour aux jeux</button>
                     </div>
                 </div>
 
                 <!-- OBSTACLES GAME -->
                 <div id="obstaclesGame" class="game-container">
-                    <h3>🏃 Course d'Obstacles</h3>
-                    <p style="text-align: center; margin: 16px 0;">Appuie sur ESPACE pour sauter les obstacles !</p>
-                    <canvas id="obstaclesCanvas" width="600" height="300" style="border: 2px solid var(--border); border-radius: 12px; display: block; margin: 0 auto; background: linear-gradient(to right, #ffeef8, #e0f2fe);"></canvas>
-                    <div style="text-align: center; margin-top: 20px;">
-                        <p><strong>Score:</strong> <span id="obstaclesScore">0</span></p>
-                        <button class="play-btn" onclick="initObstaclesGame()">🔄 Nouvelle Partie</button>
-                        <button class="play-btn" onclick="hideAllGames()">← Retour aux jeux</button>
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>🏃 Course d'Obstacles</h3>
+                            <p>Appuie sur ESPACE pour sauter les obstacles !</p>
+                        </div>
+                        <canvas id="obstaclesCanvas" width="600" height="300" style="border: 2px solid var(--border); border-radius: 12px; display: block; margin: 0 auto; background: linear-gradient(to right, #ffeef8, #e0f2fe);"></canvas>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <p><strong>Score:</strong> <span id="obstaclesScore">0</span></p>
+                            <button class="play-btn" onclick="initObstaclesGame()">🔄 Nouvelle Partie</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- SIMON SAYS GAME -->
                 <div id="simonGame" class="game-container">
-                    <h3>🎵 Simon Says - Dressage</h3>
-                    <p style="text-align: center; margin: 16px 0;">Mémorise la séquence de commandes et répète-la !</p>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 400px; margin: 20px auto;">
-                        <button class="play-btn" style="padding: 40px; font-size: 60px;" onclick="simonPlayerInput(0)">🪑</button>
-                        <button class="play-btn" style="padding: 40px; font-size: 60px;" onclick="simonPlayerInput(1)">🤝</button>
-                        <button class="play-btn" style="padding: 40px; font-size: 60px;" onclick="simonPlayerInput(2)">⬇️</button>
-                        <button class="play-btn" style="padding: 40px; font-size: 60px;" onclick="simonPlayerInput(3)">🛑</button>
-                    </div>
-                    <div style="text-align: center;">
-                        <p><strong>Niveau:</strong> <span id="simonLevel">0</span> | <strong>État:</strong> <span id="simonStatus">Prêt</span></p>
-                        <button class="play-btn" onclick="initSimonGame()">🔄 Nouvelle Partie</button>
-                        <button class="play-btn" onclick="hideAllGames()">← Retour aux jeux</button>
+                    <div class="game-inner">
+                        <button class="game-close" onclick="hideAllGames()">✕</button>
+                        <div class="game-header">
+                            <h3>🎵 Simon Says - Dressage</h3>
+                            <p>Mémorise la séquence de commandes et répète-la !</p>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 400px; margin: 20px auto;">
+                            <button class="play-btn" style="padding: 40px; font-size: 60px;" onclick="simonPlayerInput(0)">🪑</button>
+                            <button class="play-btn" style="padding: 40px; font-size: 60px;" onclick="simonPlayerInput(1)">🤝</button>
+                            <button class="play-btn" style="padding: 40px; font-size: 60px;" onclick="simonPlayerInput(2)">⬇️</button>
+                            <button class="play-btn" style="padding: 40px; font-size: 60px;" onclick="simonPlayerInput(3)">🛑</button>
+                        </div>
+                        <div style="text-align: center;">
+                            <p><strong>Niveau:</strong> <span id="simonLevel">0</span> | <strong>État:</strong> <span id="simonStatus">Prêt</span></p>
+                            <button class="play-btn" onclick="initSimonGame()">🔄 Nouvelle Partie</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2142,6 +2225,7 @@
             const gameId = gameMap[gameName];
             if (gameId) {
                 document.getElementById(gameId).classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
                 
                 // Initialize games
                 if (gameName === 'quiz' && currentQuestion === 0) initQuiz();
@@ -2160,11 +2244,20 @@
                 if (elem) elem.classList.remove('active');
             });
             
+            document.body.style.overflow = ''; // Restore scroll
+            
             // Stop game loops
             if (catchBallInterval) clearInterval(catchBallInterval);
             if (feedingInterval) clearInterval(feedingInterval);
             if (obstaclesInterval) clearInterval(obstaclesInterval);
         }
+
+        // ESC key to close games
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hideAllGames();
+            }
+        });
 
         // CATCH BALL GAME
         let catchBallInterval = null;
